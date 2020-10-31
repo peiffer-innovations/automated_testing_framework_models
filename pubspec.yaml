@@ -7,6 +7,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  convert: ^2.1.1
   json_class: ^1.0.6+1
   meta: ^1.1.8
   pointycastle: ^2.0.0
