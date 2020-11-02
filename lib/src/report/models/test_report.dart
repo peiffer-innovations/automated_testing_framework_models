@@ -94,7 +94,7 @@ class TestReport extends JsonClass {
 
   /// The number of steps that encountered an error and failed.
   int get errorSteps =>
-      _steps.values.where((step) => step.error == null).length;
+      _steps.values.where((step) => step.error != null).length;
 
   /// Returns the exception stream for the report.  This will return [null] if
   /// the report has already been completed.  Listeners will be notified
