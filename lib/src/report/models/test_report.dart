@@ -107,7 +107,7 @@ class TestReport extends JsonClass {
   Stream<TestImage> get imageStream => _imageStreamController?.stream;
 
   /// Returns the list of images that were screen captured via the test.
-  List<TestImage> get images => List.unmodifiable(_images ?? {});
+  List<TestImage> get images => List.unmodifiable(_images ?? <TestImage>[]);
 
   /// Returns the logging stream for the report.  This will return [null] if the
   /// report has already been completed.  Listeners will be notified whenever a
