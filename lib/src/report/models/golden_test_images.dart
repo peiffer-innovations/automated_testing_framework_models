@@ -20,7 +20,7 @@ class GoldenTestImages extends JsonClass {
             ),
         timestamp = timestamp ?? DateTime.now();
 
-  final BaseTestDeviceInfo deviceInfo;
+  final TestDeviceInfo deviceInfo;
   final Map<String, String> goldenHashes;
   final String id;
   final String suiteName;
@@ -29,7 +29,7 @@ class GoldenTestImages extends JsonClass {
   final DateTime timestamp;
 
   static String createId({
-    @required BaseTestDeviceInfo deviceInfo,
+    @required TestDeviceInfo deviceInfo,
     @required String suiteName,
     @required String testName,
   }) {
@@ -54,7 +54,7 @@ class GoldenTestImages extends JsonClass {
 
     if (map != null) {
       result = GoldenTestImages(
-        deviceInfo: BaseTestDeviceInfo.fromDynamic(map['deviceInfo']),
+        deviceInfo: TestDeviceInfo.fromDynamic(map['deviceInfo']),
         goldenHashes: map['goldenHashes'] == null
             ? null
             : Map<String, String>.from(map['goldenHashes']),

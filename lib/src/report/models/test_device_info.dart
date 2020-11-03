@@ -5,8 +5,8 @@ import 'package:json_class/json_class.dart';
 /// Container class for the device information for the device the test is being
 /// executed on.
 @immutable
-class BaseTestDeviceInfo extends JsonClass {
-  BaseTestDeviceInfo.custom({
+class TestDeviceInfo extends JsonClass {
+  TestDeviceInfo.custom({
     @required this.appIdentifier,
     @required this.brand,
     @required this.buildNumber,
@@ -25,7 +25,7 @@ class BaseTestDeviceInfo extends JsonClass {
     instance = this;
   }
 
-  static BaseTestDeviceInfo instance;
+  static TestDeviceInfo instance;
 
   final String appIdentifier;
   final String brand;
@@ -42,13 +42,13 @@ class BaseTestDeviceInfo extends JsonClass {
   final BaseSize pixels;
   final String systemVersion;
 
-  static BaseTestDeviceInfo fromDynamic(dynamic map) {
-    BaseTestDeviceInfo result;
+  static TestDeviceInfo fromDynamic(dynamic map) {
+    TestDeviceInfo result;
 
     if (map != null) {
       var screen = map['screen'] ?? {};
 
-      result = BaseTestDeviceInfo.custom(
+      result = TestDeviceInfo.custom(
         appIdentifier: map['appIdentifier'],
         brand: map['brand'],
         buildNumber: map['buildNumber'],

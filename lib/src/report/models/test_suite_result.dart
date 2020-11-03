@@ -19,7 +19,7 @@ class TestSuiteResult {
         assert(numStepsTotal >= numStepsPassed);
 
   /// The test device info from the report
-  final BaseTestDeviceInfo deviceInfo;
+  final TestDeviceInfo deviceInfo;
 
   /// The name of the test
   final String name;

@@ -9,12 +9,12 @@ import 'package:uuid/uuid.dart';
 /// Represents a report from a test run.
 class TestReport extends JsonClass {
   TestReport({
-    BaseTestDeviceInfo deviceInfo,
+    TestDeviceInfo deviceInfo,
     String id,
     this.name,
     this.suiteName,
     this.version,
-  })  : deviceInfo = deviceInfo ?? BaseTestDeviceInfo.instance,
+  })  : deviceInfo = deviceInfo ?? TestDeviceInfo.instance,
         id = id ?? Uuid().v4(),
         _images = [],
         _logs = [],
@@ -43,7 +43,7 @@ class TestReport extends JsonClass {
   }
 
   /// Information about the app and device the test is executing on.
-  final BaseTestDeviceInfo deviceInfo;
+  final TestDeviceInfo deviceInfo;
 
   /// The unique identifier for the report.  If not specifically set then this
   /// will be an auto-generated UUID.
@@ -155,7 +155,7 @@ class TestReport extends JsonClass {
     TestReport result;
     if (map != null) {
       result = TestReport._internal(
-        deviceInfo: BaseTestDeviceInfo.fromDynamic(map['deviceInfo']),
+        deviceInfo: TestDeviceInfo.fromDynamic(map['deviceInfo']),
         endTime: DateTime.fromMillisecondsSinceEpoch(
           JsonClass.parseInt(map['endTime']),
         ),

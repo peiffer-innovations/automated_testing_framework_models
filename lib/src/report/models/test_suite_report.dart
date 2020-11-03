@@ -22,7 +22,7 @@ class TestSuiteReport {
   /// Returns the test device info from the test suite.  This assumes that the
   /// device hasn't changed during the entire run so it will return the first
   /// non-null instance from any of the results.
-  BaseTestDeviceInfo get deviceInfo {
+  TestDeviceInfo get deviceInfo {
     var infos = _results.where((result) => result.deviceInfo != null);
     var info = infos?.isNotEmpty == true ? infos.first.deviceInfo : null;
 

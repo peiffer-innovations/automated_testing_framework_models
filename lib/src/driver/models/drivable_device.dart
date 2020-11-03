@@ -11,7 +11,7 @@ class DrivableDevice extends JsonClass {
     @required String id,
     @required String secret,
     @required String status,
-    @required BaseTestDeviceInfo testDeviceInfo,
+    @required TestDeviceInfo testDeviceInfo,
   }) {
     var appId =
         TestAppSettings.settings.appIdentifier ?? appIdentifier ?? '<unknown>';
@@ -61,7 +61,7 @@ class DrivableDevice extends JsonClass {
   final DateTime pingTime;
   final String signature;
   final String status;
-  final BaseTestDeviceInfo testDeviceInfo;
+  final TestDeviceInfo testDeviceInfo;
 
   static DrivableDevice fromDynamic(dynamic map) {
     DrivableDevice result;
@@ -75,7 +75,7 @@ class DrivableDevice extends JsonClass {
         pingTime: JsonClass.parseUtcMillis(map['pingTime']),
         signature: map['signature'],
         status: map['status'],
-        testDeviceInfo: BaseTestDeviceInfo.fromDynamic(map['testDeviceInfo']),
+        testDeviceInfo: TestDeviceInfo.fromDynamic(map['testDeviceInfo']),
       );
     }
 

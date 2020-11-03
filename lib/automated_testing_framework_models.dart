@@ -12,8 +12,8 @@ export 'src/framework/models/testable_gesture_action.dart';
 export 'src/framework/models/testable_gestures.dart';
 
 export 'src/report/models/base_size.dart';
-export 'src/report/models/base_test_device_info.dart';
 export 'src/report/models/golden_test_images.dart';
+export 'src/report/models/test_device_info.dart';
 export 'src/report/models/test_image.dart';
 export 'src/report/models/test_report.dart';
 export 'src/report/models/test_report_step.dart';

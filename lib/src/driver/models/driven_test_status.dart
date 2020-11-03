@@ -21,7 +21,7 @@ class DrivenTestStatus extends JsonClass {
 
   factory DrivenTestStatus.fromTest({
     bool complete = false,
-    @required BaseTestDeviceInfo deviceInfo,
+    @required TestDeviceInfo deviceInfo,
     @required String driverId,
     bool pending = false,
     double progress = 0.0,
@@ -45,7 +45,7 @@ class DrivenTestStatus extends JsonClass {
       );
 
   final bool complete;
-  final BaseTestDeviceInfo deviceInfo;
+  final TestDeviceInfo deviceInfo;
   final String driverId;
   final bool pending;
   final double progress;
@@ -63,7 +63,7 @@ class DrivenTestStatus extends JsonClass {
     if (map != null) {
       result = DrivenTestStatus(
         complete: JsonClass.parseBool(map['complete']),
-        deviceInfo: BaseTestDeviceInfo.fromDynamic(map['deviceInfo']),
+        deviceInfo: TestDeviceInfo.fromDynamic(map['deviceInfo']),
         driverId: map['driverId'],
         pending: JsonClass.parseBool(map['pending']),
         progress: JsonClass.parseDouble(map['progress']),
