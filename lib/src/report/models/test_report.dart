@@ -151,7 +151,10 @@ class TestReport extends JsonClass {
     return success;
   }
 
-  static TestReport fromDynamic(dynamic map) {
+  static TestReport fromDynamic(
+    dynamic map, {
+    String id,
+  }) {
     TestReport result;
     if (map != null) {
       result = TestReport._internal(
@@ -159,6 +162,7 @@ class TestReport extends JsonClass {
         endTime: DateTime.fromMillisecondsSinceEpoch(
           JsonClass.parseInt(map['endTime']),
         ),
+        id: id ?? map['id'],
         images: JsonClass.fromDynamicList(
             map['images'], (map) => TestImage.fromDynamic(map)),
         logs: List<String>.from(map['logs']),
