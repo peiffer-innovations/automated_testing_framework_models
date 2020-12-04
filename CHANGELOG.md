@@ -1,3 +1,8 @@
+## [1.0.2] - December 4th, 2020
+
+* Fix for when there are no logs in the `TestReport`.
+
+
 ## [1.0.1] - December 2nd, 2020
 
 * Added id to `TestReport.fromDynamic`.

@@ -165,7 +165,7 @@ class TestReport extends JsonClass {
         id: id ?? map['id'],
         images: JsonClass.fromDynamicList(
             map['images'], (map) => TestImage.fromDynamic(map)),
-        logs: List<String>.from(map['logs']),
+        logs: List<String>.from(map['logs'] ?? <String>[]),
         name: map['name'],
         runtimeException: map['runtimeException'],
         startTime: DateTime.fromMillisecondsSinceEpoch(
