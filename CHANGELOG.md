@@ -1,3 +1,8 @@
+## [1.0.2+1] - December 4th, 2020
+
+* Updated to emit id on `TestReport.toJson`.
+
+
 ## [1.0.2] - December 4th, 2020
 
 * Fix for when there are no logs in the `TestReport`.

@@ -277,6 +277,7 @@ class TestReport extends JsonClass {
         'deviceInfo': deviceInfo.toJson(),
         'endTime': endTime?.millisecondsSinceEpoch,
         'errorSteps': errorSteps,
+        'id': id,
         'images': TestImage.toJsonList(images, includeImageData),
         'logs': logs,
         'name': name,
