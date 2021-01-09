@@ -1,3 +1,8 @@
+## [1.0.3+1] - January 9th, 2021
+
+* Added JSON processing to `TestReportMetadata`.
+
+
 ## [1.0.3] - January 9th, 2021
 
 * Added `TestReportMetadata` to allow for simplified report analytics.

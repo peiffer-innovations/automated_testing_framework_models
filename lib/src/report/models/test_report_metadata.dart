@@ -1,8 +1,9 @@
 import 'package:automated_testing_framework_models/automated_testing_framework_models.dart';
+import 'package:json_class/json_class.dart';
 import 'package:meta/meta.dart';
 
 @immutable
-class TestReportMetadata {
+class TestReportMetadata extends JsonClass {
   TestReportMetadata({
     @required this.deviceInfo,
     @required this.id,
@@ -26,6 +27,26 @@ class TestReportMetadata {
   final int testVersion;
   final DateTime timestamp;
 
+  static TestReportMetadata fromDynamic(dynamic map) {
+    TestReportMetadata result;
+
+    if (map != null) {
+      result = TestReportMetadata(
+        deviceInfo: map['deviceInfo'],
+        id: map['id'],
+        numSteps: JsonClass.parseInt(map['numSteps']),
+        passedSteps: JsonClass.parseInt(map['passedSteps']),
+        success: JsonClass.parseBool(map['success']),
+        suiteName: map['suiteName'],
+        testName: map['testName'],
+        testVersion: map['testVersion'],
+        timestamp: JsonClass.parseUtcMillis(map['timestamp']),
+      );
+    }
+
+    return result;
+  }
+
   static TestReportMetadata fromTestReport(TestReport report) {
     TestReportMetadata result;
 
@@ -45,4 +66,17 @@ class TestReportMetadata {
 
     return result;
   }
+
+  @override
+  Map<String, dynamic> toJson() => {
+        'deviceInfo': deviceInfo,
+        'id': id,
+        'numSteps': numSteps,
+        'passedSteps': passedSteps,
+        'success': success,
+        'suiteName': suiteName,
+        'testName': testName,
+        'testVersion': testVersion,
+        'timestamp': timestamp.millisecondsSinceEpoch,
+      };
 }
