@@ -1,6 +1,6 @@
 name: automated_testing_framework_models
 description: Core models for the automated testing framework to provide pure dart support for server side integrations.
-version: 1.0.2+1
+version: 1.0.3
 homepage: https://github.com/peiffer-innovations/automated_testing_framework_models
 
 environment:
@@ -8,8 +8,8 @@ environment:
 
 dependencies:
   convert: ^2.1.1
-  json_class: ^1.0.7
-  meta: ^1.1.8
+  json_class: ^1.0.7+1
+  meta: ^1.2.4
   pointycastle: ^2.0.0
   uuid: ^2.2.2
 

@@ -1,3 +1,8 @@
+## [1.0.3] - January 9th, 2021
+
+* Added `TestReportMetadata` to allow for simplified report analytics.
+
+
 ## [1.0.2+1] - December 4th, 2020
 
 * Updated to emit id on `TestReport.toJson`.

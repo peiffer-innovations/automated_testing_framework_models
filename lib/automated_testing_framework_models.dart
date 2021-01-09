@@ -16,6 +16,7 @@ export 'src/report/models/golden_test_images.dart';
 export 'src/report/models/test_device_info.dart';
 export 'src/report/models/test_image.dart';
 export 'src/report/models/test_report.dart';
+export 'src/report/models/test_report_metadata.dart';
 export 'src/report/models/test_report_step.dart';
 export 'src/report/models/test_suite_report.dart';
 export 'src/report/models/test_suite_result.dart';
