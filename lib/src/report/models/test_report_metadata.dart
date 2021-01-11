@@ -69,7 +69,7 @@ class TestReportMetadata extends JsonClass {
 
   @override
   Map<String, dynamic> toJson() => {
-        'deviceInfo': deviceInfo,
+        'deviceInfo': deviceInfo.toJson(),
         'id': id,
         'numSteps': numSteps,
         'passedSteps': passedSteps,

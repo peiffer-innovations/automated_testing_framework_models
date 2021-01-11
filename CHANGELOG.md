@@ -1,3 +1,8 @@
+## [1.0.4] - January 11th, 2021
+
+* Fix to properly serialize `TestReportMetadata`.
+
+
 ## [1.0.3+1] - January 9th, 2021
 
 * Added JSON processing to `TestReportMetadata`.
