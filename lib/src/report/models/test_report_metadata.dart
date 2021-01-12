@@ -27,13 +27,16 @@ class TestReportMetadata extends JsonClass {
   final int testVersion;
   final DateTime timestamp;
 
-  static TestReportMetadata fromDynamic(dynamic map) {
+  static TestReportMetadata fromDynamic(
+    dynamic map, {
+    String id,
+  }) {
     TestReportMetadata result;
 
     if (map != null) {
       result = TestReportMetadata(
         deviceInfo: TestDeviceInfo.fromDynamic(map['deviceInfo']),
-        id: map['id'],
+        id: id ?? map['id'],
         numSteps: JsonClass.parseInt(map['numSteps']),
         passedSteps: JsonClass.parseInt(map['passedSteps']),
         success: JsonClass.parseBool(map['success']),
@@ -47,13 +50,16 @@ class TestReportMetadata extends JsonClass {
     return result;
   }
 
-  static TestReportMetadata fromTestReport(TestReport report) {
+  static TestReportMetadata fromTestReport(
+    TestReport report, {
+    String id,
+  }) {
     TestReportMetadata result;
 
     if (report != null) {
       result = TestReportMetadata(
         deviceInfo: report.deviceInfo,
-        id: report.id,
+        id: id ?? report.id,
         numSteps: report.steps.length,
         passedSteps: report.passedSteps,
         success: report.success ?? false,

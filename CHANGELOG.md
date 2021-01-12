@@ -1,6 +1,7 @@
-## [1.0.5+1] - January 12th, 2021
+## [1.0.5+2] - January 12th, 2021
 
 * Fix to properly deserialize `TestReportMetadata`.
+* Added ability to override id in `TestReportMetadata`.
 
 
 ## [1.0.4] - January 11th, 2021
