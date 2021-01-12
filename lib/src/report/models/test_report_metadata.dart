@@ -32,7 +32,7 @@ class TestReportMetadata extends JsonClass {
 
     if (map != null) {
       result = TestReportMetadata(
-        deviceInfo: map['deviceInfo'],
+        deviceInfo: TestDeviceInfo.fromDynamic(map['deviceInfo']),
         id: map['id'],
         numSteps: JsonClass.parseInt(map['numSteps']),
         passedSteps: JsonClass.parseInt(map['passedSteps']),
@@ -52,7 +52,7 @@ class TestReportMetadata extends JsonClass {
 
     if (report != null) {
       result = TestReportMetadata(
-        deviceInfo: TestDeviceInfo.fromDynamic(report.deviceInfo),
+        deviceInfo: report.deviceInfo,
         id: report.id,
         numSteps: report.steps.length,
         passedSteps: report.passedSteps,
