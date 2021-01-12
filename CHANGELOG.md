@@ -1,3 +1,8 @@
+## [1.0.5] - January 12th, 2021
+
+* Fix to properly deserialize `TestReportMetadata`.
+
+
 ## [1.0.4] - January 11th, 2021
 
 * Fix to properly serialize `TestReportMetadata`.

@@ -52,7 +52,7 @@ class TestReportMetadata extends JsonClass {
 
     if (report != null) {
       result = TestReportMetadata(
-        deviceInfo: report.deviceInfo,
+        deviceInfo: TestDeviceInfo.fromDynamic(report.deviceInfo),
         id: report.id,
         numSteps: report.steps.length,
         passedSteps: report.passedSteps,
