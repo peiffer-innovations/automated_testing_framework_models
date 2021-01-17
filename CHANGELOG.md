@@ -1,3 +1,8 @@
+## [1.0.5+3] - January 17th, 2021
+
+* Dependency updates
+
+
 ## [1.0.5+2] - January 12th, 2021
 
 * Fix to properly deserialize `TestReportMetadata`.
