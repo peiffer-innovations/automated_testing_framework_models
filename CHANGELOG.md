@@ -1,3 +1,8 @@
+## [1.1.0] - February 21st, 2021
+
+* Added models to better support a new realtime driver.
+
+
 ## [1.0.5+3] - January 17th, 2021
 
 * Dependency updates
