@@ -100,6 +100,41 @@ class TestDeviceInfo extends JsonClass implements Comparable<TestDeviceInfo> {
     return result;
   }
 
+  TestDeviceInfo copyWith({
+    String appIdentifier,
+    String brand,
+    String buildNumber,
+    String device,
+    String deviceGroup,
+    double devicePixelRatio,
+    BaseSize dips,
+    String id,
+    String manufacturer,
+    String model,
+    String orientation,
+    String os,
+    bool physicalDevice,
+    BaseSize pixels,
+    String systemVersion,
+  }) =>
+      TestDeviceInfo.custom(
+        appIdentifier: appIdentifier ?? this.appIdentifier,
+        brand: brand ?? this.brand,
+        buildNumber: buildNumber ?? this.brand,
+        device: device ?? this.device,
+        deviceGroup: deviceGroup ?? this.deviceGroup,
+        devicePixelRatio: devicePixelRatio ?? this.devicePixelRatio,
+        dips: dips ?? this.dips,
+        id: id ?? this.id,
+        manufacturer: manufacturer ?? this.manufacturer,
+        model: model ?? this.model,
+        orientation: orientation ?? this.orientation,
+        os: os ?? this.os,
+        physicalDevice: physicalDevice ?? this.physicalDevice,
+        pixels: pixels ?? this.pixels,
+        systemVersion: systemVersion ?? this.systemVersion,
+      );
+
   @override
   Map<String, dynamic> toJson() => {
         'appIdentifier': appIdentifier,

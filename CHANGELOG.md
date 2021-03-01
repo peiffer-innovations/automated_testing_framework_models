@@ -1,3 +1,9 @@
+## [1.1.1] - February 28th, 2021
+
+* Updated `DeviceCommand` to expose the constructor.
+* Fixed `RunTestCommand` encoder to ensure the `sendScreenshots` is sent.
+
+
 ## [1.1.0] - February 21st, 2021
 
 * Added models to better support a new realtime driver.

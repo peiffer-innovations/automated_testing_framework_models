@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 import 'package:uuid/uuid.dart';
 
 class DeviceCommand extends JsonClass {
-  DeviceCommand._internal({
+  DeviceCommand({
     String id,
     @required this.payload,
     DateTime timestamp,
@@ -45,7 +45,7 @@ class DeviceCommand extends JsonClass {
     DeviceCommand result;
 
     if (map != null) {
-      var cmd = DeviceCommand._internal(
+      var cmd = DeviceCommand(
         id: map['id'],
         type: map['type'],
         payload: map['payload'],
@@ -84,7 +84,7 @@ class AbortTestCommand extends DeviceCommand {
   AbortTestCommand({
     String id,
     DateTime timestamp,
-  }) : super._internal(
+  }) : super(
           id: id,
           payload: _toPayload(),
           timestamp: timestamp,
@@ -120,7 +120,7 @@ class AnnounceDeviceCommand extends DeviceCommand {
   })  : assert(device != null),
         assert(salt != null),
         appIdentifier = device.appIdentifier,
-        super._internal(
+        super(
           id: id,
           payload: _toPayload(
             appIdentifier: device.appIdentifier,
@@ -186,7 +186,7 @@ class AnnounceDriverCommand extends DeviceCommand {
         assert(driverId != null),
         assert(driverName != null),
         assert(salt != null),
-        super._internal(
+        super(
           id: id,
           payload: _toPayload(
             appIdentifier: appIdentifier,
@@ -243,7 +243,7 @@ class AnnounceDriverCommand extends DeviceCommand {
 class ChallengeCommand extends DeviceCommand {
   ChallengeCommand({String id, @required this.salt, DateTime timestamp})
       : assert(salt != null),
-        super._internal(
+        super(
           id: id,
           payload: _toPayload(
             salt: salt,
@@ -289,7 +289,7 @@ class ChallengeResponseCommand extends DeviceCommand {
     @required this.signature,
     DateTime timestamp,
   })  : assert(signature != null),
-        super._internal(
+        super(
           id: id,
           payload: _toPayload(
             commandId: commandId,
@@ -342,7 +342,7 @@ class CommandAck extends DeviceCommand {
     this.success,
     DateTime timestamp,
   })  : assert(commandId != null),
-        super._internal(
+        super(
           id: id,
           payload: _toPayload(
             commandId: commandId,
@@ -401,7 +401,7 @@ class GoodbyeCommand extends DeviceCommand {
     this.complete = false,
     String id,
     DateTime timestamp,
-  }) : super._internal(
+  }) : super(
           id: id,
           payload: _toPayload(
             complete: complete,
@@ -444,7 +444,7 @@ class ListDevicesCommand extends DeviceCommand {
     this.availableOnly = false,
     String id,
     DateTime timestamp,
-  }) : super._internal(
+  }) : super(
           id: id,
           payload: _toPayload(availableOnly: availableOnly),
           timestamp: timestamp,
@@ -486,7 +486,7 @@ class PingCommand extends DeviceCommand {
     String id,
     this.testControllerState,
     DateTime timestamp,
-  }) : super._internal(
+  }) : super(
           id: id,
           payload: _toPayload(
             testControllerState: testControllerState,
@@ -533,7 +533,7 @@ class ReleaseDeviceCommand extends DeviceCommand {
     String id,
     DateTime timestamp,
   })  : assert(deviceId != null),
-        super._internal(
+        super(
           id: id,
           payload: _toPayload(
             deviceId: deviceId,
@@ -578,7 +578,7 @@ class RequestScreenshotCommand extends DeviceCommand {
     String id,
     DateTime timestamp,
   })  : assert(deviceId != null),
-        super._internal(
+        super(
           id: id,
           payload: _toPayload(
             deviceId: deviceId,
@@ -625,7 +625,7 @@ class ReserveDeviceCommand extends DeviceCommand {
     DateTime timestamp,
   })  : assert(deviceId != null),
         assert(driverName != null),
-        super._internal(
+        super(
           id: id,
           payload: _toPayload(
             deviceId: deviceId,
@@ -676,10 +676,11 @@ class RunTestCommand extends DeviceCommand {
     @required this.test,
     DateTime timestamp,
   })  : assert(test != null),
-        super._internal(
+        super(
           id: id,
           payload: _toPayload(
             test: test,
+            sendScreenshots: sendScreenshots,
           ),
           timestamp: timestamp,
           type: kCommandType,
@@ -725,7 +726,7 @@ class StartLogStreamCommand extends DeviceCommand {
     this.level = Level.INFO,
     DateTime timestamp,
   })  : assert(level != null),
-        super._internal(
+        super(
           id: id,
           payload: _toPayload(
             level: level,
@@ -771,7 +772,7 @@ class StartScreenshotStreamCommand extends DeviceCommand {
     DateTime timestamp,
   })  : assert(interval != null),
         assert(interval.inSeconds >= 1),
-        super._internal(
+        super(
           id: id,
           payload: _toPayload(
             interval: interval,
@@ -814,7 +815,7 @@ class StopLogStreamCommand extends DeviceCommand {
   StopLogStreamCommand({
     String id,
     DateTime timestamp,
-  }) : super._internal(
+  }) : super(
           id: id,
           payload: _toPayload(),
           timestamp: timestamp,
@@ -847,7 +848,7 @@ class StopScreenshotStreamCommand extends DeviceCommand {
   StopScreenshotStreamCommand({
     String id,
     DateTime timestamp,
-  }) : super._internal(
+  }) : super(
           id: id,
           payload: _toPayload(),
           timestamp: timestamp,
