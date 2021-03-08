@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 /// on [Testable] widgets.
 @immutable
 class TestableGestureAction {
-  const TestableGestureAction._(this.code) : assert(code != null);
+  const TestableGestureAction._(this.code);
 
   /// Action that will result in the simplified test step dialog being displayed
   /// to the end user.

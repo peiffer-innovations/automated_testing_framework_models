@@ -7,47 +7,79 @@ import 'package:json_class/json_class.dart';
 @immutable
 class TestDeviceInfo extends JsonClass implements Comparable<TestDeviceInfo> {
   TestDeviceInfo.custom({
-    @required this.appIdentifier,
-    @required this.brand,
-    @required this.buildNumber,
-    @required this.device,
-    @required this.deviceGroup,
-    @required this.devicePixelRatio,
-    @required this.dips,
-    @required this.id,
-    @required this.manufacturer,
-    @required this.model,
-    @required this.os,
-    @required this.orientation,
-    bool physicalDevice = true,
-    @required this.pixels,
-    @required this.systemVersion,
-  }) : physicalDevice = physicalDevice ?? true {
+    required this.appIdentifier,
+    required this.brand,
+    required this.buildNumber,
+    required this.device,
+    this.deviceGroup,
+    this.devicePixelRatio,
+    this.dips,
+    required this.id,
+    required this.manufacturer,
+    required this.model,
+    required this.os,
+    this.orientation,
+    this.physicalDevice = true,
+    this.pixels,
+    required this.systemVersion,
+  }) {
     instance = this;
   }
 
-  static TestDeviceInfo instance;
+  TestDeviceInfo._({
+    required this.appIdentifier,
+    required this.brand,
+    required this.buildNumber,
+    required this.device,
+    this.deviceGroup,
+    this.devicePixelRatio,
+    this.dips,
+    required this.id,
+    required this.manufacturer,
+    required this.model,
+    required this.os,
+    this.orientation,
+    this.physicalDevice = true,
+    this.pixels,
+    required this.systemVersion,
+  });
+
+  factory TestDeviceInfo.unknown() => TestDeviceInfo._(
+        appIdentifier: 'unknown',
+        brand: 'unknown',
+        buildNumber: 'unknown',
+        device: 'unknown',
+        id: 'unknown',
+        manufacturer: 'unknown',
+        model: 'unknown',
+        os: 'unknown',
+        systemVersion: 'unknown',
+      );
+
+  static TestDeviceInfo? instance;
 
   final String appIdentifier;
   final String brand;
   final String buildNumber;
   final String device;
-  final String deviceGroup;
-  final double devicePixelRatio;
-  final BaseSize dips;
+  final String? deviceGroup;
+  final double? devicePixelRatio;
+  final BaseSize? dips;
   final String id;
   final String manufacturer;
   final String model;
-  final String orientation;
+  final String? orientation;
   final String os;
   final bool physicalDevice;
-  final BaseSize pixels;
+  final BaseSize? pixels;
   final String systemVersion;
 
   static TestDeviceInfo fromDynamic(dynamic map) {
     TestDeviceInfo result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[TestDeviceInfo.fromDynamic]: map is null');
+    } else {
       var screen = map['screen'] ?? {};
 
       result = TestDeviceInfo.custom(
@@ -101,21 +133,21 @@ class TestDeviceInfo extends JsonClass implements Comparable<TestDeviceInfo> {
   }
 
   TestDeviceInfo copyWith({
-    String appIdentifier,
-    String brand,
-    String buildNumber,
-    String device,
-    String deviceGroup,
-    double devicePixelRatio,
-    BaseSize dips,
-    String id,
-    String manufacturer,
-    String model,
-    String orientation,
-    String os,
-    bool physicalDevice,
-    BaseSize pixels,
-    String systemVersion,
+    String? appIdentifier,
+    String? brand,
+    String? buildNumber,
+    String? device,
+    String? deviceGroup,
+    double? devicePixelRatio,
+    BaseSize? dips,
+    String? id,
+    String? manufacturer,
+    String? model,
+    String? orientation,
+    String? os,
+    bool? physicalDevice,
+    BaseSize? pixels,
+    String? systemVersion,
   }) =>
       TestDeviceInfo.custom(
         appIdentifier: appIdentifier ?? this.appIdentifier,

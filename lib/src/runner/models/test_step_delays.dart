@@ -18,15 +18,7 @@ class TestStepDelays implements JsonClass {
     this.scrollIncrement = const Duration(milliseconds: 100),
     this.testSetUp = const Duration(milliseconds: 500),
     this.testTearDown = const Duration(milliseconds: 500),
-  })  : assert(defaultTimeout != null),
-        assert(postFoundWidget != null),
-        assert(postStep != null),
-        assert(postSubmitReport != null),
-        assert(preStep != null),
-        assert(screenshot != null),
-        assert(scrollIncrement != null),
-        assert(testSetUp != null),
-        assert(testTearDown != null);
+  });
 
   /// The default amount of time to wait for a widget being tested to become
   /// available on the widget tree.  Exceeding this timeout will result in an
@@ -89,46 +81,57 @@ class TestStepDelays implements JsonClass {
   /// See also:
   /// * [JsonClass.parseDurationFromMillis]
   static TestStepDelays fromDynamic(dynamic map) {
-    TestStepDelays result;
+    late TestStepDelays result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[TestStepDelays.fromDynamic]: map is null');
+    } else {
       result = TestStepDelays(
         defaultTimeout: JsonClass.parseDurationFromMillis(
-          map['defaultTimeout'],
-          Duration(seconds: 10),
-        ),
+              map['defaultTimeout'],
+              Duration(seconds: 10),
+            ) ??
+            Duration(seconds: 10),
         postFoundWidget: JsonClass.parseDurationFromMillis(
-          map['postFoundWidget'],
-          Duration(),
-        ),
+              map['postFoundWidget'],
+              Duration.zero,
+            ) ??
+            Duration.zero,
         postStep: JsonClass.parseDurationFromMillis(
-          map['postStep'],
-          Duration(seconds: 1),
-        ),
+              map['postStep'],
+              Duration(seconds: 1),
+            ) ??
+            Duration(seconds: 1),
         postSubmitReport: JsonClass.parseDurationFromMillis(
-          map['postSubmitReport'],
-          Duration(seconds: 5),
-        ),
+              map['postSubmitReport'],
+              Duration(seconds: 5),
+            ) ??
+            Duration(seconds: 5),
         preStep: JsonClass.parseDurationFromMillis(
-          map['preStep'],
-          Duration(seconds: 1),
-        ),
+              map['preStep'],
+              Duration(seconds: 1),
+            ) ??
+            Duration(seconds: 1),
         screenshot: JsonClass.parseDurationFromMillis(
-          map['screenshot'],
-          Duration(seconds: 5),
-        ),
+              map['screenshot'],
+              Duration(seconds: 5),
+            ) ??
+            Duration(seconds: 5),
         scrollIncrement: JsonClass.parseDurationFromMillis(
-          map['scrollIncrement'],
-          Duration(milliseconds: 100),
-        ),
+              map['scrollIncrement'],
+              Duration(milliseconds: 100),
+            ) ??
+            Duration(milliseconds: 100),
         testSetUp: JsonClass.parseDurationFromMillis(
-          map['testSetUp'],
-          Duration(milliseconds: 500),
-        ),
+              map['testSetUp'],
+              Duration(milliseconds: 500),
+            ) ??
+            Duration(milliseconds: 500),
         testTearDown: JsonClass.parseDurationFromMillis(
-          map['testTearDown'],
-          Duration(milliseconds: 500),
-        ),
+              map['testTearDown'],
+              Duration(milliseconds: 500),
+            ) ??
+            Duration(milliseconds: 500),
       );
     }
 

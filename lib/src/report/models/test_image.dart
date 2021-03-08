@@ -10,48 +10,17 @@ import 'package:meta/meta.dart';
 @immutable
 class TestImage extends JsonClass {
   TestImage({
-    int captureTime,
-    @required this.goldenCompatible,
-    String hash,
-    @required this.id,
-    @required this.image,
-  })  : assert(goldenCompatible != null),
-        assert(id?.isNotEmpty == true),
-        captureTime = captureTime ?? DateTime.now().millisecondsSinceEpoch,
-        hash = hash ?? hex.encode(SHA256Digest().process(image ?? [0]));
-
-  static TestImage fromDynamic(dynamic map) {
-    TestImage result;
-
-    if (map != null) {
-      result = TestImage(
-        captureTime: JsonClass.parseInt(map['captureTime']),
-        goldenCompatible: JsonClass.parseBool(map['goldenCompatible']),
-        hash: map['hash'],
-        id: map['id'],
-        image: map['image'] == null ? null : base64.decode(map['image']),
-      );
-    }
-
-    return result;
-  }
-
-  static List<Map<String, dynamic>> toJsonList(
-    List<TestImage> images, [
-    bool includeImageData = false,
-  ]) {
-    List<Map<String, dynamic>> result;
-
-    if (images != null) {
-      result = <Map<String, dynamic>>[];
-
-      for (var image in images) {
-        result.add(image.toJson(includeImageData));
-      }
-    }
-
-    return result;
-  }
+    int? captureTime,
+    required this.goldenCompatible,
+    String? hash,
+    required this.id,
+    Uint8List? image,
+  })  : captureTime = captureTime ?? DateTime.now().millisecondsSinceEpoch,
+        hash = hash ??
+            hex.encode(
+              SHA256Digest().process(image ?? Uint8List(0)),
+            ),
+        image = image;
 
   /// The time the image was captured in UTC Millis.
   final int captureTime;
@@ -68,7 +37,42 @@ class TestImage extends JsonClass {
   final String id;
 
   /// The actual bytes from the image.
-  final Uint8List image;
+  final Uint8List? image;
+
+  static TestImage fromDynamic(dynamic map) {
+    late TestImage result;
+
+    if (map == null) {
+      throw Exception('[TestImage.fromDynamic]: map is null');
+    } else {
+      result = TestImage(
+        captureTime: JsonClass.parseInt(map['captureTime']),
+        goldenCompatible: JsonClass.parseBool(map['goldenCompatible']),
+        hash: map['hash'],
+        id: map['id'],
+        image: map['image'] == null ? null : base64.decode(map['image']),
+      );
+    }
+
+    return result;
+  }
+
+  static List<Map<String, dynamic>>? toJsonList(
+    List<TestImage>? images, [
+    bool includeImageData = false,
+  ]) {
+    List<Map<String, dynamic>>? result;
+
+    if (images != null) {
+      result = <Map<String, dynamic>>[];
+
+      for (var image in images) {
+        result.add(image.toJson(includeImageData));
+      }
+    }
+
+    return result;
+  }
 
   @override
   Map<String, dynamic> toJson([bool includeImageData = false]) => {
@@ -76,6 +80,7 @@ class TestImage extends JsonClass {
         'goldenCompatible': goldenCompatible,
         'hash': hash,
         'id': id,
-        if (includeImageData == true) 'image': base64.encode(image),
+        if (includeImageData == true && image != null)
+          'image': base64.encode(image ?? Uint8List(0)),
       };
 }

@@ -8,23 +8,23 @@ class CancelToken {
     this.timeout,
   }) {
     if (timeout != null) {
-      _timer = Timer(timeout, () => cancel());
+      _timer = Timer(timeout ?? Duration.zero, () => cancel());
     }
   }
 
   static final Logger _logger = Logger('CancelToken');
 
-  final Duration timeout;
+  final Duration? timeout;
 
-  StreamController<void> _controller = StreamController<bool>.broadcast();
+  StreamController<void>? _controller = StreamController<bool>.broadcast();
 
   bool _cancelled = false;
   bool _completed = false;
-  Timer _timer;
+  Timer? _timer;
 
   bool get cancelled => _cancelled;
   bool get completed => _completed;
-  Stream<void> get stream => _controller?.stream;
+  Stream<void>? get stream => _controller?.stream;
 
   Future<void> cancel() async {
     if (_controller != null) {
@@ -33,7 +33,7 @@ class CancelToken {
       _timer = null;
 
       _cancelled = true;
-      _controller.add(null);
+      _controller?.add(null);
       await _controller?.close();
       _controller = null;
     }

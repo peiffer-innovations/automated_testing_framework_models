@@ -3,10 +3,6 @@ export 'src/driver/interface/test_device_communicator.dart';
 export 'src/driver/models/command_response.dart';
 export 'src/driver/models/connected_device.dart';
 export 'src/driver/models/device_command.dart';
-export 'src/driver/models/drivable_device.dart';
-export 'src/driver/models/driven_test_status.dart';
-export 'src/driver/models/driver_test_request.dart';
-export 'src/driver/models/external_test_driver.dart';
 export 'src/driver/models/json_log_record.dart';
 export 'src/driver/models/test_device_status.dart';
 

@@ -1,3 +1,8 @@
+## [2.0.0] - March 7th, 2021
+
+* Null Safety
+
+
 ## [1.1.1] - February 28th, 2021
 
 * Updated `DeviceCommand` to expose the constructor.

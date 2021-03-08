@@ -5,7 +5,7 @@ class AsyncTestLoader extends TestLoader {
   /// Constructs the loader with the callback to use.
   AsyncTestLoader(
     this.callback,
-  ) : assert(callback != null);
+  );
 
   /// The callback to execute to get the test.
   final Future<Test> Function() callback;

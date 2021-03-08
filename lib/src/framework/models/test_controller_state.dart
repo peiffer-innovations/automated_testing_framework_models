@@ -10,23 +10,25 @@ class TestControllerState extends JsonClass {
     this.runningTest = false,
   });
 
-  String currentStep;
-  String currentTest;
+  String? currentStep;
+  String? currentTest;
   bool passing;
   double progress;
   bool runningSuite;
   bool runningTest;
-  DateTime updated;
+  DateTime? updated;
 
   static TestControllerState fromDynamic(dynamic map) {
-    TestControllerState result;
+    late TestControllerState result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[TestControllerState.fromDynamic]: map is null');
+    } else {
       result = TestControllerState(
         currentStep: map['currentStep'],
         currentTest: map['currentTest'],
         passing: JsonClass.parseBool(map['passing']),
-        progress: JsonClass.parseDouble(map['progress'], 0.0),
+        progress: JsonClass.parseDouble(map['progress'], 0.0) ?? 0.0,
         runningSuite: JsonClass.parseBool(map['runningSuite']),
         runningTest: JsonClass.parseBool(map['runningTest']),
       );

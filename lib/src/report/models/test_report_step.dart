@@ -1,5 +1,4 @@
 import 'package:json_class/json_class.dart';
-import 'package:meta/meta.dart';
 
 /// The result for an executed test step.  It's important to note that times in
 /// the report are relative to each run and should not be thought of in absolute
@@ -12,20 +11,19 @@ class TestReportStep extends JsonClass {
   TestReportStep({
     this.endTime,
     this.error,
-    @required this.id,
-    DateTime startTime,
-    @required this.step,
-    @required this.subStep,
-  })  : assert(id?.isNotEmpty == true),
-        assert(subStep != null),
+    required this.id,
+    DateTime? startTime,
+    required this.step,
+    this.subStep = false,
+  })  : assert(id.isNotEmpty == true),
         startTime = startTime ?? DateTime.now();
 
   /// The date time that the step completed.
-  final DateTime endTime;
+  final DateTime? endTime;
 
   /// Any error description if an error happened.  Will be [null] if, and only
   /// if, the step passed.
-  final String error;
+  final String? error;
 
   /// The id of the test step.
   final String id;
@@ -34,7 +32,7 @@ class TestReportStep extends JsonClass {
   final DateTime startTime;
 
   /// The values from the test step.
-  final Map<String, dynamic> step;
+  final Map<String, dynamic>? step;
 
   /// Set to [true] if this represents a step executed by another step or
   /// [false] if the step is a top-level test step directly executed by the
@@ -42,9 +40,11 @@ class TestReportStep extends JsonClass {
   final bool subStep;
 
   static TestReportStep fromDynamic(dynamic map) {
-    TestReportStep result;
+    late TestReportStep result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[TestReportStep.fromDynamic]: map is null');
+    } else {
       result = TestReportStep(
         endTime: JsonClass.parseUtcMillis(map['endTime']),
         error: map['error'],
@@ -61,11 +61,11 @@ class TestReportStep extends JsonClass {
 
   /// Copies the report entry with the given values.
   TestReportStep copyWith({
-    DateTime endTime,
-    String error,
-    Map<String, dynamic> step,
-    DateTime startTime,
-    bool subStep,
+    DateTime? endTime,
+    String? error,
+    Map<String, dynamic>? step,
+    DateTime? startTime,
+    bool? subStep,
   }) =>
       TestReportStep(
         endTime: endTime ?? this.endTime,
@@ -82,7 +82,7 @@ class TestReportStep extends JsonClass {
         'endTime': endTime?.millisecondsSinceEpoch,
         'error': error,
         'id': id,
-        'startTime': startTime?.millisecondsSinceEpoch,
+        'startTime': startTime.millisecondsSinceEpoch,
         'step': step,
         'subStep': subStep,
       };

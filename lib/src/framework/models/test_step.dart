@@ -11,7 +11,7 @@ import 'package:uuid/uuid.dart';
 @immutable
 class TestStep extends JsonClass {
   TestStep({
-    this.id,
+    required this.id,
     this.image,
     this.values,
   });
@@ -20,7 +20,7 @@ class TestStep extends JsonClass {
   final String id;
 
   /// Optional image that shows an example of the widget involved with the step.
-  final Uint8List image;
+  final Uint8List? image;
 
   /// Guaranteed unique key for the step.  This is meant for internal use to
   /// ensure widgets that represent the widget can be correctly, and uniquely,
@@ -30,7 +30,7 @@ class TestStep extends JsonClass {
 
   /// The map of key / value pairs that are utilized by the step.  This map will
   /// be different based on the step's [id].
-  final Map<String, dynamic> values;
+  final Map<String, dynamic>? values;
 
   /// Converts a JSON-like object to a [TestStep].  Whie this accepts a
   /// [dynamic], that is because different frameworks provide different types of
@@ -56,11 +56,13 @@ class TestStep extends JsonClass {
     dynamic map, {
     bool ignoreImages = false,
   }) {
-    TestStep result;
+    late TestStep result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[TestStep.fromDynamic]: map is null');
+    } else {
       result = TestStep(
-        id: map['id'],
+        id: map['id'] ?? Uuid().v4(),
         image: map['image'] == null || ignoreImages == true
             ? null
             : base64Decode(map['image']),
@@ -80,9 +82,9 @@ class TestStep extends JsonClass {
   /// To clear the [image], set an [image] with a length of zero and that will
   /// result in the copy excluding the image.
   TestStep copyWith({
-    String id,
-    Uint8List image,
-    Map<String, dynamic> values,
+    String? id,
+    Uint8List? image,
+    Map<String, dynamic>? values,
   }) =>
       TestStep(
         id: id ?? this.id,
@@ -94,8 +96,8 @@ class TestStep extends JsonClass {
   /// For the returned format, see the [fromDynamic] function.
   @override
   Map<String, dynamic> toJson() => {
-        if (id?.isNotEmpty == true) 'id': id,
-        if (image != null) 'image': base64Encode(image),
+        'id': id,
+        if (image != null) 'image': base64Encode(image ?? <int>[]),
         if (values?.isNotEmpty == true) 'values': values,
       };
 }

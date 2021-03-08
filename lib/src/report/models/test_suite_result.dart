@@ -1,25 +1,20 @@
 import 'package:automated_testing_framework_models/automated_testing_framework_models.dart';
-import 'package:meta/meta.dart';
 
 /// Represents a the summarized results from a single test run within a larger
 /// test suite.
 class TestSuiteResult {
   TestSuiteResult({
-    @required this.deviceInfo,
-    @required this.name,
-    @required this.numStepsPassed,
-    @required this.numStepsTotal,
-    @required this.steps,
+    this.deviceInfo,
+    required this.name,
+    required this.numStepsPassed,
+    required this.numStepsTotal,
+    required this.steps,
     this.suiteName,
-    @required this.version,
-  })  : assert(name?.isNotEmpty == true),
-        assert(version != null),
-        assert(numStepsPassed != null),
-        assert(numStepsTotal != null),
-        assert(numStepsTotal >= numStepsPassed);
+    required this.version,
+  }) : assert(numStepsTotal >= numStepsPassed);
 
   /// The test device info from the report
-  final TestDeviceInfo deviceInfo;
+  final TestDeviceInfo? deviceInfo;
 
   /// The name of the test
   final String name;
@@ -34,7 +29,7 @@ class TestSuiteResult {
   final List<TestReportStep> steps;
 
   /// The test suite name
-  final String suiteName;
+  final String? suiteName;
 
   /// The version of the test
   final int version;
@@ -51,6 +46,6 @@ class TestSuiteResult {
         numStepsTotal: report.steps.length,
         steps: report.steps,
         suiteName: report.suiteName,
-        version: report.version ?? 0,
+        version: report.version,
       );
 }

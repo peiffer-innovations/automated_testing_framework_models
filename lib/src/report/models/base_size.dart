@@ -9,13 +9,13 @@ class BaseSize extends JsonClass {
   final double height;
   final double width;
 
-  static BaseSize fromDynamic(dynamic map) {
-    BaseSize result;
+  static BaseSize? fromDynamic(dynamic map) {
+    BaseSize? result;
 
     if (map != null) {
       result = BaseSize(
-        JsonClass.parseDouble(map['width']),
-        JsonClass.parseDouble(map['height']),
+        JsonClass.parseDouble(map['width']) ?? 0.0,
+        JsonClass.parseDouble(map['height']) ?? 0.0,
       );
     }
 

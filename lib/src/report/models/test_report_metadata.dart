@@ -17,21 +17,21 @@ class TestReportMetadata extends JsonClass {
   })  : assert(testName?.isNotEmpty == true),
         assert(timestamp != null);
 
-  final TestDeviceInfo deviceInfo;
-  final String id;
-  final int numSteps;
-  final int passedSteps;
-  final bool success;
-  final String suiteName;
-  final String testName;
-  final int testVersion;
-  final DateTime timestamp;
+  final TestDeviceInfo? deviceInfo;
+  final String? id;
+  final int? numSteps;
+  final int? passedSteps;
+  final bool? success;
+  final String? suiteName;
+  final String? testName;
+  final int? testVersion;
+  final DateTime? timestamp;
 
-  static TestReportMetadata fromDynamic(
-    dynamic map, {
-    String id,
+  static TestReportMetadata? fromDynamic(
+    dynamic? map, {
+    String? id,
   }) {
-    TestReportMetadata result;
+    TestReportMetadata? result;
 
     if (map != null) {
       result = TestReportMetadata(
@@ -50,11 +50,11 @@ class TestReportMetadata extends JsonClass {
     return result;
   }
 
-  static TestReportMetadata fromTestReport(
-    TestReport report, {
-    String id,
+  static TestReportMetadata? fromTestReport(
+    TestReport? report, {
+    String? id,
   }) {
-    TestReportMetadata result;
+    TestReportMetadata? result;
 
     if (report != null) {
       result = TestReportMetadata(
@@ -62,7 +62,7 @@ class TestReportMetadata extends JsonClass {
         id: id ?? report.id,
         numSteps: report.steps.length,
         passedSteps: report.passedSteps,
-        success: report.success ?? false,
+        success: report.success,
         suiteName: report.suiteName,
         testName: report.name,
         testVersion: report.version,
@@ -75,7 +75,7 @@ class TestReportMetadata extends JsonClass {
 
   @override
   Map<String, dynamic> toJson() => {
-        'deviceInfo': deviceInfo.toJson(),
+        'deviceInfo': deviceInfo?.toJson(),
         'id': id,
         'numSteps': numSteps,
         'passedSteps': passedSteps,
@@ -83,6 +83,6 @@ class TestReportMetadata extends JsonClass {
         'suiteName': suiteName,
         'testName': testName,
         'testVersion': testVersion,
-        'timestamp': timestamp.millisecondsSinceEpoch,
+        'timestamp': timestamp?.millisecondsSinceEpoch,
       };
 }

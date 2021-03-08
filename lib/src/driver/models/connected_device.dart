@@ -1,23 +1,23 @@
 import 'package:automated_testing_framework_models/automated_testing_framework_models.dart';
 import 'package:json_class/json_class.dart';
-import 'package:meta/meta.dart';
 
 class ConnectedDevice extends JsonClass {
   ConnectedDevice({
-    @required this.device,
+    required this.device,
     this.driverName,
-    @required this.testControllerState,
-  })  : assert(device != null),
-        assert(testControllerState != null);
+    required this.testControllerState,
+  });
 
   final TestDeviceInfo device;
-  final String driverName;
+  final String? driverName;
   final TestControllerState testControllerState;
 
   static ConnectedDevice fromDynamic(dynamic map) {
-    ConnectedDevice result;
+    late ConnectedDevice result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[ConnectedDevice.fromDynamic]: map is null');
+    } else {
       result = ConnectedDevice(
         device: TestDeviceInfo.fromDynamic(map['device']),
         driverName: map['driverName'],

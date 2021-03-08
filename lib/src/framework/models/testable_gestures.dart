@@ -30,44 +30,44 @@ class TestableGestures {
 
   /// Action that will execute when an individual [Testable] overlay is double
   /// tapped.
-  final TestableGestureAction overlayDoubleTap;
+  final TestableGestureAction? overlayDoubleTap;
 
   /// Action that will execute when an individual [Testable] overlay is long
   /// pressed.
-  final TestableGestureAction overlayLongPress;
+  final TestableGestureAction? overlayLongPress;
 
   /// Action that will execute when an individual [Testable] overlay is tapped.
-  final TestableGestureAction overlayTap;
+  final TestableGestureAction? overlayTap;
 
   /// Action that will execute when a [Testable] widget with the overlay hidden
   /// is double tapped.
-  final TestableGestureAction widgetDoubleTap;
+  final TestableGestureAction? widgetDoubleTap;
 
   /// Action that will execute when a [Testable] widget with the overlay hidden
   /// receives a force press end event.
-  final TestableGestureAction widgetForcePressEnd;
+  final TestableGestureAction? widgetForcePressEnd;
 
   /// Action that will execute when a [Testable] widget with the overlay hidden
   /// receives a force press start event.
-  final TestableGestureAction widgetForcePressStart;
+  final TestableGestureAction? widgetForcePressStart;
 
   /// Action that will execute when a [Testable] widget with the overlay hidden
   /// is long pressed.
-  final TestableGestureAction widgetLongPress;
+  final TestableGestureAction? widgetLongPress;
 
   /// Action that will execute when a [Testable] widget with the overlay hidden
   /// receives a move update event after long pressing the widget.
-  final TestableGestureAction widgetLongPressMoveUpdate;
+  final TestableGestureAction? widgetLongPressMoveUpdate;
 
   /// Action that will execute when a [Testable] widget with the overlay hidden
   /// is long pressed with the secondary button.
-  final TestableGestureAction widgetSecondaryLongPress;
+  final TestableGestureAction? widgetSecondaryLongPress;
 
   /// Action that will execute when a [Testable] widget with the overlay hidden
   /// is tapped with the secondary button.
-  final TestableGestureAction widgetSecondaryTap;
+  final TestableGestureAction? widgetSecondaryTap;
 
   /// Action that will execute when a [Testable] widget with the overlay hidden
   /// is tapped.
-  final TestableGestureAction widgetTap;
+  final TestableGestureAction? widgetTap;
 }

@@ -6,14 +6,12 @@ class Test extends JsonClass {
   /// Constructs the test.
   Test({
     this.active = true,
-    this.name,
-    List<TestStep> steps,
+    required this.name,
+    List<TestStep>? steps,
     this.suiteName,
-    DateTime timestamp,
+    DateTime? timestamp,
     this.version = 0,
-  })  : assert(active != null),
-        assert(version != null),
-        steps = steps == null ? <TestStep>[] : List<TestStep>.from(steps),
+  })  : steps = steps == null ? <TestStep>[] : List<TestStep>.from(steps),
         timestamp = timestamp ?? DateTime.now();
 
   /// Sets whether or not this test is currently active.  The interal system
@@ -27,7 +25,7 @@ class Test extends JsonClass {
   final List<TestStep> steps;
 
   /// The name of the test suite this test is a part of; may be [null] or empty.
-  final String suiteName;
+  final String? suiteName;
 
   /// The timestamp for the test step.
   final DateTime timestamp;
@@ -53,9 +51,11 @@ class Test extends JsonClass {
     dynamic map, {
     bool ignoreImages = false,
   }) {
-    Test result;
+    late Test result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[Test.fromDynamic]: map is null');
+    } else {
       result = Test(
         active:
             map['active'] == null ? true : JsonClass.parseBool(map['active']),
@@ -71,7 +71,7 @@ class Test extends JsonClass {
           map['timestamp'],
           DateTime.now().millisecondsSinceEpoch,
         ),
-        version: JsonClass.parseInt(map['version'], 1),
+        version: JsonClass.parseInt(map['version'], 1) ?? 1,
       );
     }
 
@@ -91,12 +91,12 @@ class Test extends JsonClass {
 
   /// Copies this test with the given values.
   Test copyWith({
-    bool active,
-    String name,
-    List<TestStep> steps,
-    String suiteName,
-    DateTime timestamp,
-    int version,
+    bool? active,
+    String? name,
+    List<TestStep>? steps,
+    String? suiteName,
+    DateTime? timestamp,
+    int? version,
   }) =>
       Test(
         active: active ?? this.active,
@@ -112,10 +112,10 @@ class Test extends JsonClass {
   @override
   Map<String, dynamic> toJson() => {
         'active': active,
-        'name': name ?? '<unnammed>',
+        'name': name,
         'steps': JsonClass.toJsonList(steps),
         'suiteName': suiteName,
-        'timestamp': (timestamp ?? DateTime.now()).millisecondsSinceEpoch,
+        'timestamp': timestamp.millisecondsSinceEpoch,
         'version': version,
       };
 }

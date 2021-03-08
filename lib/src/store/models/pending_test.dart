@@ -8,17 +8,12 @@ class PendingTest {
   /// Constructs the pending test.
   PendingTest({
     this.active = true,
-    @required this.loader,
-    @required this.name,
-    @required this.numSteps,
-    @required this.suiteName,
-    @required this.version,
-  })  : assert(active != null),
-        assert(loader != null),
-        assert(name?.isNotEmpty == true),
-        assert(numSteps != null),
-        assert(numSteps >= 0),
-        assert(version != null),
+    required this.loader,
+    required this.name,
+    required this.numSteps,
+    required this.suiteName,
+    required this.version,
+  })   : assert(numSteps >= 0),
         assert(version >= 0);
 
   /// Constructs the pending test from an already loaded in-memory test.  This
@@ -45,7 +40,7 @@ class PendingTest {
   final int numSteps;
 
   /// Name of the test suite the test is a part of.
-  final String suiteName;
+  final String? suiteName;
 
   /// Version of the test to be loaded.
   final int version;

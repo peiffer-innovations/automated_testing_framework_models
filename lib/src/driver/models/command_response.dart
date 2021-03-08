@@ -3,17 +3,17 @@ import 'dart:typed_data';
 
 import 'package:automated_testing_framework_models/automated_testing_framework_models.dart';
 import 'package:json_class/json_class.dart';
-import 'package:meta/meta.dart';
+import 'package:logging/logging.dart';
 
 class CommandResponse extends JsonClass {
   CommandResponse({
     this.message,
     this.payload,
     this.success,
-    @required this.type,
-  }) : assert(message != null || (payload != null && type != null));
+    required this.type,
+  }) : assert(message != null || payload != null);
 
-  static final Map<String, CommandResponse Function(dynamic, String, bool)>
+  static final Map<String, CommandResponse Function(dynamic, String?, bool?)>
       _builders = {
     ListDevicesResponse.kResponseType: ListDevicesResponse.fromDynamic,
     LogResponse.kResponseType: LogResponse.fromDynamic,
@@ -21,13 +21,13 @@ class CommandResponse extends JsonClass {
     TestStatusResponse.kResponseType: TestStatusResponse.fromDynamic,
   };
 
-  final String message;
-  final dynamic payload;
-  final bool success;
+  final String? message;
+  final dynamic? payload;
+  final bool? success;
   final String type;
 
-  static CommandResponse fromDynamic(dynamic map) {
-    CommandResponse result;
+  static CommandResponse? fromDynamic(dynamic map) {
+    CommandResponse? result;
 
     if (map != null) {
       String type = map['type'];
@@ -50,7 +50,7 @@ class CommandResponse extends JsonClass {
 
   /// Allows application to register it's own custom responses.
   static void registerCustomResponses(
-          Map<String, CommandResponse Function(dynamic, String, bool)>
+          Map<String, CommandResponse Function(dynamic, String?, bool?)>
               builders) =>
       _builders.addAll(builders);
 
@@ -68,11 +68,10 @@ class CommandResponse extends JsonClass {
 
 class ListDevicesResponse extends CommandResponse {
   ListDevicesResponse({
-    @required this.devices,
-    String message,
-    bool success,
-  })  : assert(devices != null),
-        super(
+    required this.devices,
+    String? message,
+    bool? success,
+  }) : super(
           message: message,
           payload: _toPayload(
             devices: devices,
@@ -87,17 +86,20 @@ class ListDevicesResponse extends CommandResponse {
 
   static ListDevicesResponse fromDynamic(
     dynamic map,
-    String message,
-    bool success,
+    String? message,
+    bool? success,
   ) {
-    ListDevicesResponse result;
+    late ListDevicesResponse result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[ListDevicesResponse.fromDynamic]: map is null');
+    } else {
       result = ListDevicesResponse(
         devices: JsonClass.fromDynamicList(
-          map['devices'],
-          (map) => ConnectedDevice.fromDynamic(map),
-        ),
+              map['devices'],
+              (map) => ConnectedDevice.fromDynamic(map),
+            ) ??
+            <ConnectedDevice>[],
         message: message,
         success: success,
       );
@@ -107,7 +109,7 @@ class ListDevicesResponse extends CommandResponse {
   }
 
   static Map<String, dynamic> _toPayload({
-    @required List<ConnectedDevice> devices,
+    required List<ConnectedDevice> devices,
   }) =>
       {
         'devices': JsonClass.toJsonList(devices),
@@ -116,11 +118,10 @@ class ListDevicesResponse extends CommandResponse {
 
 class LogResponse extends CommandResponse {
   LogResponse({
-    String message,
-    @required this.record,
-    bool success,
-  })  : assert(record != null),
-        super(
+    String? message,
+    required this.record,
+    bool? success,
+  }) : super(
           message: message,
           payload: _toPayload(
             record: record,
@@ -135,15 +136,18 @@ class LogResponse extends CommandResponse {
 
   static LogResponse fromDynamic(
     dynamic map,
-    String message,
-    bool success,
+    String? message,
+    bool? success,
   ) {
-    LogResponse result;
+    late LogResponse result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[LogResponse.fromDynamic]: map is null');
+    } else {
       result = LogResponse(
         message: message,
-        record: JsonLogRecord.fromDynamic(map['record']),
+        record: JsonLogRecord.fromDynamic(map['record']) ??
+            JsonLogRecord(level: Level.SEVERE, message: ''),
         success: success,
       );
     }
@@ -152,20 +156,19 @@ class LogResponse extends CommandResponse {
   }
 
   static Map<String, dynamic> _toPayload({
-    @required JsonLogRecord record,
+    required JsonLogRecord record,
   }) =>
       {
-        'record': record?.toJson(),
+        'record': record.toJson(),
       };
 }
 
 class ScreenshotResponse extends CommandResponse {
   ScreenshotResponse({
-    @required this.image,
-    String message,
-    bool success,
-  })  : assert(image != null),
-        super(
+    required this.image,
+    String? message,
+    bool? success,
+  }) : super(
           message: message,
           payload: _toPayload(
             image: image,
@@ -180,14 +183,17 @@ class ScreenshotResponse extends CommandResponse {
 
   static ScreenshotResponse fromDynamic(
     dynamic map,
-    String message,
-    bool success,
+    String? message,
+    bool? success,
   ) {
-    ScreenshotResponse result;
+    late ScreenshotResponse result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[ScreenshotResponse.fromDynamic]: map is null');
+    } else {
       result = ScreenshotResponse(
-        image: map['image'] == null ? null : base64Decode(map['image']),
+        image: (map['image'] == null ? null : base64Decode(map['image'])) ??
+            Uint8List(0),
         message: message,
         success: success,
       );
@@ -196,7 +202,7 @@ class ScreenshotResponse extends CommandResponse {
     return result;
   }
 
-  static Map<String, dynamic> _toPayload({@required Uint8List image}) => {
+  static Map<String, dynamic> _toPayload({Uint8List? image}) => {
         'image': image == null ? null : base64Encode(image),
       };
 }
@@ -205,10 +211,10 @@ class TestStatusResponse extends CommandResponse {
   TestStatusResponse({
     this.complete = false,
     this.progress = 0.0,
-    String message,
-    this.report,
-    this.status,
-    bool success,
+    String? message,
+    required this.report,
+    required this.status,
+    bool? success,
   }) : super(
           message: message,
           payload: _toPayload(
@@ -230,16 +236,18 @@ class TestStatusResponse extends CommandResponse {
 
   static TestStatusResponse fromDynamic(
     dynamic map,
-    String message,
-    bool success,
+    String? message,
+    bool? success,
   ) {
-    TestStatusResponse result;
+    late TestStatusResponse result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[TestStatusResponse.fromDynamic]: map is null');
+    } else {
       result = TestStatusResponse(
         complete: JsonClass.parseBool(map['complete']),
         message: message,
-        progress: JsonClass.parseDouble(map['progress']),
+        progress: JsonClass.parseDouble(map['progress']) ?? 0.0,
         report: TestReport.fromDynamic(map['report']),
         status: map['status'],
         success: success,
@@ -250,10 +258,10 @@ class TestStatusResponse extends CommandResponse {
   }
 
   static Map<String, dynamic> _toPayload({
-    bool complete,
-    double progress,
-    TestReport report,
-    String status,
+    bool? complete,
+    double? progress,
+    TestReport? report,
+    String? status,
   }) =>
       {
         'complete': complete,

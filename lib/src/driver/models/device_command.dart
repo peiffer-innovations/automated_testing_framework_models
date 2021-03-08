@@ -3,16 +3,15 @@ import 'dart:convert';
 import 'package:automated_testing_framework_models/automated_testing_framework_models.dart';
 import 'package:json_class/json_class.dart';
 import 'package:logging/logging.dart';
-import 'package:meta/meta.dart';
 import 'package:uuid/uuid.dart';
 
 class DeviceCommand extends JsonClass {
   DeviceCommand({
-    String id,
-    @required this.payload,
-    DateTime timestamp,
-    @required this.type,
-  })  : id = id ?? Uuid().v4(),
+    String? id,
+    required this.payload,
+    DateTime? timestamp,
+    required this.type,
+  })   : id = id ?? Uuid().v4(),
         timestamp = timestamp ?? DateTime.now();
 
   static final Map<String, DeviceCommand Function(dynamic, String, DateTime)>
@@ -42,9 +41,11 @@ class DeviceCommand extends JsonClass {
   final String type;
 
   static DeviceCommand fromDynamic(dynamic map) {
-    DeviceCommand result;
+    late DeviceCommand result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[DeviceCommand.fromDynamic]: map is null');
+    } else {
       var cmd = DeviceCommand(
         id: map['id'],
         type: map['type'],
@@ -82,8 +83,8 @@ class DeviceCommand extends JsonClass {
 
 class AbortTestCommand extends DeviceCommand {
   AbortTestCommand({
-    String id,
-    DateTime timestamp,
+    String? id,
+    DateTime? timestamp,
   }) : super(
           id: id,
           payload: _toPayload(),
@@ -98,9 +99,11 @@ class AbortTestCommand extends DeviceCommand {
     String id,
     DateTime timestamp,
   ) {
-    AbortTestCommand result;
+    late AbortTestCommand result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[AbortTestCommand.fromDynamic]: map is null');
+    } else {
       result = AbortTestCommand();
     }
 
@@ -112,14 +115,12 @@ class AbortTestCommand extends DeviceCommand {
 
 class AnnounceDeviceCommand extends DeviceCommand {
   AnnounceDeviceCommand({
-    String id,
-    @required this.device,
-    @required this.salt,
-    @required this.testControllerState,
-    DateTime timestamp,
-  })  : assert(device != null),
-        assert(salt != null),
-        appIdentifier = device.appIdentifier,
+    String? id,
+    required this.device,
+    required this.salt,
+    required this.testControllerState,
+    DateTime? timestamp,
+  })  : appIdentifier = device.appIdentifier,
         super(
           id: id,
           payload: _toPayload(
@@ -146,7 +147,9 @@ class AnnounceDeviceCommand extends DeviceCommand {
   ) {
     AnnounceDeviceCommand result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[AnnounceDeviceCommand.fromDynamic]: map is null');
+    } else {
       result = AnnounceDeviceCommand(
         device: TestDeviceInfo.fromDynamic(map['device']),
         id: id,
@@ -161,10 +164,10 @@ class AnnounceDeviceCommand extends DeviceCommand {
   }
 
   static Map<String, dynamic> _toPayload({
-    @required String appIdentifier,
-    @required TestDeviceInfo device,
-    @required String salt,
-    @required TestControllerState testControllerState,
+    required String appIdentifier,
+    TestDeviceInfo? device,
+    required String salt,
+    required TestControllerState testControllerState,
   }) =>
       {
         'appIdentifier': appIdentifier,
@@ -176,17 +179,13 @@ class AnnounceDeviceCommand extends DeviceCommand {
 
 class AnnounceDriverCommand extends DeviceCommand {
   AnnounceDriverCommand({
-    @required this.appIdentifier,
-    @required this.driverId,
-    @required this.driverName,
-    String id,
-    @required this.salt,
-    DateTime timestamp,
-  })  : assert(appIdentifier != null),
-        assert(driverId != null),
-        assert(driverName != null),
-        assert(salt != null),
-        super(
+    required this.appIdentifier,
+    required this.driverId,
+    required this.driverName,
+    String? id,
+    required this.salt,
+    DateTime? timestamp,
+  }) : super(
           id: id,
           payload: _toPayload(
             appIdentifier: appIdentifier,
@@ -210,9 +209,11 @@ class AnnounceDriverCommand extends DeviceCommand {
     String id,
     DateTime timestamp,
   ) {
-    AnnounceDriverCommand result;
+    late AnnounceDriverCommand result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[AnnounceDriverCommand.fromDynamic]: map is null');
+    } else {
       result = AnnounceDriverCommand(
         appIdentifier: map['appIdentifier'],
         driverId: map['driverId'],
@@ -227,10 +228,10 @@ class AnnounceDriverCommand extends DeviceCommand {
   }
 
   static Map<String, dynamic> _toPayload({
-    String appIdentifier,
-    String driverId,
-    String driverName,
-    String salt,
+    required String appIdentifier,
+    required String driverId,
+    required String driverName,
+    required String salt,
   }) =>
       {
         'appIdentifier': appIdentifier,
@@ -241,9 +242,11 @@ class AnnounceDriverCommand extends DeviceCommand {
 }
 
 class ChallengeCommand extends DeviceCommand {
-  ChallengeCommand({String id, @required this.salt, DateTime timestamp})
-      : assert(salt != null),
-        super(
+  ChallengeCommand({
+    String? id,
+    required this.salt,
+    DateTime? timestamp,
+  }) : super(
           id: id,
           payload: _toPayload(
             salt: salt,
@@ -261,9 +264,11 @@ class ChallengeCommand extends DeviceCommand {
     String id,
     DateTime timestamp,
   ) {
-    ChallengeCommand result;
+    late ChallengeCommand result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[ChallengeCommand.fromDynamic]: map is null');
+    } else {
       result = ChallengeCommand(
         id: id,
         salt: map['salt'],
@@ -275,7 +280,7 @@ class ChallengeCommand extends DeviceCommand {
   }
 
   static Map<String, dynamic> _toPayload({
-    String salt,
+    required String salt,
   }) =>
       {
         'salt': salt,
@@ -284,12 +289,11 @@ class ChallengeCommand extends DeviceCommand {
 
 class ChallengeResponseCommand extends DeviceCommand {
   ChallengeResponseCommand({
-    @required this.commandId,
-    String id,
-    @required this.signature,
-    DateTime timestamp,
-  })  : assert(signature != null),
-        super(
+    required this.commandId,
+    String? id,
+    required this.signature,
+    DateTime? timestamp,
+  }) : super(
           id: id,
           payload: _toPayload(
             commandId: commandId,
@@ -309,9 +313,11 @@ class ChallengeResponseCommand extends DeviceCommand {
     String id,
     DateTime timestamp,
   ) {
-    ChallengeResponseCommand result;
+    late ChallengeResponseCommand result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[ChallengeResponseCommand.fromDynamic]: map is null');
+    } else {
       result = ChallengeResponseCommand(
         commandId: map['commandId'],
         id: id,
@@ -324,8 +330,8 @@ class ChallengeResponseCommand extends DeviceCommand {
   }
 
   static Map<String, dynamic> _toPayload({
-    String commandId,
-    String signature,
+    required String commandId,
+    required String signature,
   }) =>
       {
         'commandId': commandId,
@@ -335,14 +341,13 @@ class ChallengeResponseCommand extends DeviceCommand {
 
 class CommandAck extends DeviceCommand {
   CommandAck({
-    @required this.commandId,
-    String id,
+    required this.commandId,
+    String? id,
     this.message,
     this.response,
     this.success,
-    DateTime timestamp,
-  })  : assert(commandId != null),
-        super(
+    DateTime? timestamp,
+  }) : super(
           id: id,
           payload: _toPayload(
             commandId: commandId,
@@ -357,18 +362,20 @@ class CommandAck extends DeviceCommand {
   static const kCommandType = 'ack';
 
   final String commandId;
-  final String message;
-  final CommandResponse response;
-  final bool success;
+  final String? message;
+  final CommandResponse? response;
+  final bool? success;
 
   static CommandAck fromDynamic(
     dynamic map,
     String id,
     DateTime timestamp,
   ) {
-    CommandAck result;
+    late CommandAck result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[CommandAck.fromDynamic]: map is null');
+    } else {
       result = CommandAck(
         commandId: map['commandId'],
         id: id,
@@ -383,10 +390,10 @@ class CommandAck extends DeviceCommand {
   }
 
   static Map<String, dynamic> _toPayload({
-    String commandId,
-    String message,
-    CommandResponse response,
-    bool success,
+    required String commandId,
+    String? message,
+    CommandResponse? response,
+    bool? success,
   }) =>
       {
         'commandId': commandId,
@@ -399,8 +406,8 @@ class CommandAck extends DeviceCommand {
 class GoodbyeCommand extends DeviceCommand {
   GoodbyeCommand({
     this.complete = false,
-    String id,
-    DateTime timestamp,
+    String? id,
+    DateTime? timestamp,
   }) : super(
           id: id,
           payload: _toPayload(
@@ -421,7 +428,9 @@ class GoodbyeCommand extends DeviceCommand {
   ) {
     GoodbyeCommand result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[GoodbyeCommand.fromDynamic]: map is null');
+    } else {
       result = GoodbyeCommand(
         id: id,
         timestamp: timestamp,
@@ -432,7 +441,7 @@ class GoodbyeCommand extends DeviceCommand {
   }
 
   static Map<String, dynamic> _toPayload({
-    @required bool complete,
+    required bool complete,
   }) =>
       {
         'complete': complete,
@@ -442,8 +451,8 @@ class GoodbyeCommand extends DeviceCommand {
 class ListDevicesCommand extends DeviceCommand {
   ListDevicesCommand({
     this.availableOnly = false,
-    String id,
-    DateTime timestamp,
+    String? id,
+    DateTime? timestamp,
   }) : super(
           id: id,
           payload: _toPayload(availableOnly: availableOnly),
@@ -460,9 +469,11 @@ class ListDevicesCommand extends DeviceCommand {
     String id,
     DateTime timestamp,
   ) {
-    ListDevicesCommand result;
+    late ListDevicesCommand result;
 
     if (map != null) {
+      throw Exception('[ListDevicesCommand.fromDynamic]: map is null');
+    } else {
       result = ListDevicesCommand(
         availableOnly: JsonClass.parseBool(map['availableOnly']),
         id: id,
@@ -474,7 +485,7 @@ class ListDevicesCommand extends DeviceCommand {
   }
 
   static Map<String, dynamic> _toPayload({
-    @required bool availableOnly,
+    required bool availableOnly,
   }) =>
       {
         'availableOnly': availableOnly,
@@ -483,9 +494,9 @@ class ListDevicesCommand extends DeviceCommand {
 
 class PingCommand extends DeviceCommand {
   PingCommand({
-    String id,
-    this.testControllerState,
-    DateTime timestamp,
+    String? id,
+    required this.testControllerState,
+    DateTime? timestamp,
   }) : super(
           id: id,
           payload: _toPayload(
@@ -504,9 +515,11 @@ class PingCommand extends DeviceCommand {
     String id,
     DateTime timestamp,
   ) {
-    PingCommand result;
+    late PingCommand result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[PingCommand.fromDynamic]: map is null');
+    } else {
       result = PingCommand(
         id: id,
         testControllerState: TestControllerState.fromDynamic(
@@ -520,20 +533,19 @@ class PingCommand extends DeviceCommand {
   }
 
   static Map<String, dynamic> _toPayload({
-    @required TestControllerState testControllerState,
+    required TestControllerState testControllerState,
   }) =>
       {
-        'testControllerState': testControllerState?.toJson(),
+        'testControllerState': testControllerState.toJson(),
       };
 }
 
 class ReleaseDeviceCommand extends DeviceCommand {
   ReleaseDeviceCommand({
-    @required this.deviceId,
-    String id,
-    DateTime timestamp,
-  })  : assert(deviceId != null),
-        super(
+    required this.deviceId,
+    String? id,
+    DateTime? timestamp,
+  }) : super(
           id: id,
           payload: _toPayload(
             deviceId: deviceId,
@@ -551,9 +563,11 @@ class ReleaseDeviceCommand extends DeviceCommand {
     String id,
     DateTime timestamp,
   ) {
-    ReleaseDeviceCommand result;
+    late ReleaseDeviceCommand result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[ReleaseDeviceCommand.fromDynamic]: map is null');
+    } else {
       result = ReleaseDeviceCommand(
         deviceId: map['deviceId'],
         id: id,
@@ -565,7 +579,7 @@ class ReleaseDeviceCommand extends DeviceCommand {
   }
 
   static Map<String, dynamic> _toPayload({
-    @required String deviceId,
+    required String deviceId,
   }) =>
       {
         'deviceId': deviceId,
@@ -574,11 +588,10 @@ class ReleaseDeviceCommand extends DeviceCommand {
 
 class RequestScreenshotCommand extends DeviceCommand {
   RequestScreenshotCommand({
-    @required this.deviceId,
-    String id,
-    DateTime timestamp,
-  })  : assert(deviceId != null),
-        super(
+    required this.deviceId,
+    String? id,
+    DateTime? timestamp,
+  }) : super(
           id: id,
           payload: _toPayload(
             deviceId: deviceId,
@@ -598,7 +611,9 @@ class RequestScreenshotCommand extends DeviceCommand {
   ) {
     RequestScreenshotCommand result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[RequestScreenshotCommand.fromDynamic]: map is null');
+    } else {
       result = RequestScreenshotCommand(
         deviceId: map['deviceId'],
         id: id,
@@ -610,7 +625,7 @@ class RequestScreenshotCommand extends DeviceCommand {
   }
 
   static Map<String, dynamic> _toPayload({
-    @required String deviceId,
+    required String deviceId,
   }) =>
       {
         'deviceId': deviceId,
@@ -619,13 +634,11 @@ class RequestScreenshotCommand extends DeviceCommand {
 
 class ReserveDeviceCommand extends DeviceCommand {
   ReserveDeviceCommand({
-    @required this.deviceId,
-    @required this.driverName,
-    String id,
-    DateTime timestamp,
-  })  : assert(deviceId != null),
-        assert(driverName != null),
-        super(
+    required this.deviceId,
+    required this.driverName,
+    String? id,
+    DateTime? timestamp,
+  }) : super(
           id: id,
           payload: _toPayload(
             deviceId: deviceId,
@@ -647,7 +660,9 @@ class ReserveDeviceCommand extends DeviceCommand {
   ) {
     ReserveDeviceCommand result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[ReserveDeviceCommand.fromDynamic]: map is null');
+    } else {
       result = ReserveDeviceCommand(
         deviceId: map['deviceId'],
         driverName: map['driverName'],
@@ -660,8 +675,8 @@ class ReserveDeviceCommand extends DeviceCommand {
   }
 
   static Map<String, dynamic> _toPayload({
-    @required String deviceId,
-    @required String driverName,
+    required String deviceId,
+    required String driverName,
   }) =>
       {
         'deviceId': deviceId,
@@ -671,12 +686,11 @@ class ReserveDeviceCommand extends DeviceCommand {
 
 class RunTestCommand extends DeviceCommand {
   RunTestCommand({
-    String id,
-    @required this.sendScreenshots,
-    @required this.test,
-    DateTime timestamp,
-  })  : assert(test != null),
-        super(
+    String? id,
+    required this.sendScreenshots,
+    required this.test,
+    DateTime? timestamp,
+  }) : super(
           id: id,
           payload: _toPayload(
             test: test,
@@ -696,9 +710,11 @@ class RunTestCommand extends DeviceCommand {
     String id,
     DateTime timestamp,
   ) {
-    RunTestCommand result;
+    late RunTestCommand result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[RunTestCommand.fromDynamic]: map is null');
+    } else {
       result = RunTestCommand(
         id: id,
         sendScreenshots: JsonClass.parseBool(map['sendScreenshots']),
@@ -711,8 +727,8 @@ class RunTestCommand extends DeviceCommand {
   }
 
   static Map<String, dynamic> _toPayload({
-    @required bool sendScreenshots,
-    @required Test test,
+    required bool sendScreenshots,
+    required Test test,
   }) =>
       {
         'sendScreenshots': sendScreenshots,
@@ -722,11 +738,10 @@ class RunTestCommand extends DeviceCommand {
 
 class StartLogStreamCommand extends DeviceCommand {
   StartLogStreamCommand({
-    String id,
+    String? id,
     this.level = Level.INFO,
-    DateTime timestamp,
-  })  : assert(level != null),
-        super(
+    DateTime? timestamp,
+  }) : super(
           id: id,
           payload: _toPayload(
             level: level,
@@ -744,9 +759,11 @@ class StartLogStreamCommand extends DeviceCommand {
     String id,
     DateTime timestamp,
   ) {
-    StartLogStreamCommand result;
+    late StartLogStreamCommand result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[StartLogStreamCommand.fromDynamic]: map is null');
+    } else {
       result = StartLogStreamCommand(
         id: id,
         level: Level.LEVELS.where((level) => level.name == map['level']).first,
@@ -758,7 +775,7 @@ class StartLogStreamCommand extends DeviceCommand {
   }
 
   static Map<String, dynamic> _toPayload({
-    @required Level level,
+    required Level level,
   }) =>
       {
         'level': level.toString(),
@@ -767,11 +784,10 @@ class StartLogStreamCommand extends DeviceCommand {
 
 class StartScreenshotStreamCommand extends DeviceCommand {
   StartScreenshotStreamCommand({
-    String id,
+    String? id,
     this.interval = const Duration(seconds: 5),
-    DateTime timestamp,
-  })  : assert(interval != null),
-        assert(interval.inSeconds >= 1),
+    DateTime? timestamp,
+  })  : assert(interval.inSeconds >= 1),
         super(
           id: id,
           payload: _toPayload(
@@ -790,12 +806,16 @@ class StartScreenshotStreamCommand extends DeviceCommand {
     String id,
     DateTime timestamp,
   ) {
-    StartScreenshotStreamCommand result;
+    late StartScreenshotStreamCommand result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception(
+          '[StartScreenshotStreamCommand.fromDynamic]: map is null');
+    } else {
       result = StartScreenshotStreamCommand(
         id: id,
-        interval: JsonClass.parseDurationFromMillis(map['interval']),
+        interval: JsonClass.parseDurationFromMillis(map['interval']) ??
+            const Duration(seconds: 5),
         timestamp: timestamp,
       );
     }
@@ -804,7 +824,7 @@ class StartScreenshotStreamCommand extends DeviceCommand {
   }
 
   static Map<String, dynamic> _toPayload({
-    @required Duration interval,
+    required Duration interval,
   }) =>
       {
         'interval': interval.inMilliseconds,
@@ -813,8 +833,8 @@ class StartScreenshotStreamCommand extends DeviceCommand {
 
 class StopLogStreamCommand extends DeviceCommand {
   StopLogStreamCommand({
-    String id,
-    DateTime timestamp,
+    String? id,
+    DateTime? timestamp,
   }) : super(
           id: id,
           payload: _toPayload(),
@@ -829,9 +849,11 @@ class StopLogStreamCommand extends DeviceCommand {
     String id,
     DateTime timestamp,
   ) {
-    StopLogStreamCommand result;
+    late StopLogStreamCommand result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[StopLogStreamCommand.fromDynamic]: map is null');
+    } else {
       result = StopLogStreamCommand(
         id: id,
         timestamp: timestamp,
@@ -846,8 +868,8 @@ class StopLogStreamCommand extends DeviceCommand {
 
 class StopScreenshotStreamCommand extends DeviceCommand {
   StopScreenshotStreamCommand({
-    String id,
-    DateTime timestamp,
+    String? id,
+    DateTime? timestamp,
   }) : super(
           id: id,
           payload: _toPayload(),
@@ -862,9 +884,11 @@ class StopScreenshotStreamCommand extends DeviceCommand {
     String id,
     DateTime timestamp,
   ) {
-    StopScreenshotStreamCommand result;
+    late StopScreenshotStreamCommand result;
 
-    if (map != null) {
+    if (map == null) {
+      throw Exception('[StopScreenshotStreamCommand.fromDynamic]: map is null');
+    } else {
       result = StopScreenshotStreamCommand(
         id: id,
         timestamp: timestamp,
