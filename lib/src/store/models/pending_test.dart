@@ -21,7 +21,7 @@ class PendingTest {
   factory PendingTest.memory(Test test) => PendingTest(
         active: test.active,
         loader: MemoryTestLoader(test: test),
-        name: test.name,
+        name: test.name ?? 'unknown',
         numSteps: test.steps.length,
         suiteName: test.suiteName,
         version: test.version,

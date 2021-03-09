@@ -16,7 +16,7 @@ class CancelToken {
 
   final Duration? timeout;
 
-  StreamController<void>? _controller = StreamController<bool>.broadcast();
+  StreamController<void>? _controller = StreamController<void>.broadcast();
 
   bool _cancelled = false;
   bool _completed = false;
@@ -28,7 +28,7 @@ class CancelToken {
 
   Future<void> cancel() async {
     if (_controller != null) {
-      _logger.info('[CANCEL_TOKEN]: cancelling the token.');
+      _logger.info('[CANCEL TOKEN]: cancelling the token.');
       _timer?.cancel();
       _timer = null;
 

@@ -6,7 +6,7 @@ class Test extends JsonClass {
   /// Constructs the test.
   Test({
     this.active = true,
-    required this.name,
+    this.name,
     List<TestStep>? steps,
     this.suiteName,
     DateTime? timestamp,
@@ -19,7 +19,7 @@ class Test extends JsonClass {
   final bool active;
 
   /// The name for the test
-  final String name;
+  final String? name;
 
   /// The list of steps for the test
   final List<TestStep> steps;

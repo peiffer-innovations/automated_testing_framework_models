@@ -495,7 +495,7 @@ class ListDevicesCommand extends DeviceCommand {
 class PingCommand extends DeviceCommand {
   PingCommand({
     String? id,
-    required this.testControllerState,
+    this.testControllerState,
     DateTime? timestamp,
   }) : super(
           id: id,
@@ -508,7 +508,7 @@ class PingCommand extends DeviceCommand {
 
   static const kCommandType = 'ping';
 
-  final TestControllerState testControllerState;
+  final TestControllerState? testControllerState;
 
   static PingCommand fromDynamic(
     dynamic map,
@@ -533,10 +533,10 @@ class PingCommand extends DeviceCommand {
   }
 
   static Map<String, dynamic> _toPayload({
-    required TestControllerState testControllerState,
+    TestControllerState? testControllerState,
   }) =>
       {
-        'testControllerState': testControllerState.toJson(),
+        'testControllerState': testControllerState?.toJson(),
       };
 }
 

@@ -1,3 +1,8 @@
+## [2.0.0+1] - March 8th, 2021
+
+* Minor Null Safety bug fixes
+
+
 ## [2.0.0] - March 7th, 2021
 
 * Null Safety
