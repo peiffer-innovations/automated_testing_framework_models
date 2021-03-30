@@ -471,7 +471,7 @@ class ListDevicesCommand extends DeviceCommand {
   ) {
     late ListDevicesCommand result;
 
-    if (map != null) {
+    if (map == null) {
       throw Exception('[ListDevicesCommand.fromDynamic]: map is null');
     } else {
       result = ListDevicesCommand(

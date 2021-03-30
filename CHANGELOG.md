@@ -1,3 +1,8 @@
+## [2.0.0+2] - March 30th, 2021
+
+* Fix for a flipped equality comparison in `ListDevicesCommand`.
+
+
 ## [2.0.0+1] - March 8th, 2021
 
 * Minor Null Safety bug fixes
