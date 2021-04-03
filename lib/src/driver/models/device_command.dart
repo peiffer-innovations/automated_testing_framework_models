@@ -381,7 +381,8 @@ class CommandAck extends DeviceCommand {
         id: id,
         message: map['message'],
         response: CommandResponse.fromDynamic(map['response']),
-        success: JsonClass.parseBool(map['success']),
+        success:
+            map['success'] == null ? null : JsonClass.parseBool(map['success']),
         timestamp: timestamp,
       );
     }

@@ -1,3 +1,9 @@
+## [2.0.1] - April 3rd, 2021
+
+* Fix for updating the `success` attribute to allow `null` from JSON when decoding
+* Updated dependencies
+
+
 ## [2.0.0+2] - March 30th, 2021
 
 * Fix for a flipped equality comparison in `ListDevicesCommand`.
