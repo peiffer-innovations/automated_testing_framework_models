@@ -1,3 +1,8 @@
+## [2.0.1+1] - April 13, 2021
+
+* Added device info to `PingCommand`
+
+
 ## [2.0.1] - April 3rd, 2021
 
 * Fix for updating the `success` attribute to allow `null` from JSON when decoding
