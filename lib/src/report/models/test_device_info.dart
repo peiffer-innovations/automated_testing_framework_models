@@ -1,6 +1,7 @@
 import 'package:automated_testing_framework_models/automated_testing_framework_models.dart';
 import 'package:meta/meta.dart';
 import 'package:json_class/json_class.dart';
+import 'package:uuid/uuid.dart';
 
 /// Container class for the device information for the device the test is being
 /// executed on.
@@ -15,6 +16,7 @@ class TestDeviceInfo extends JsonClass implements Comparable<TestDeviceInfo> {
     this.devicePixelRatio,
     this.dips,
     required this.id,
+    String? launchId,
     required this.manufacturer,
     required this.model,
     required this.os,
@@ -22,7 +24,7 @@ class TestDeviceInfo extends JsonClass implements Comparable<TestDeviceInfo> {
     this.physicalDevice = true,
     this.pixels,
     required this.systemVersion,
-  }) {
+  }) : launchId = launchId ?? _staticLaunchUniqueId {
     instance = this;
   }
 
@@ -35,6 +37,7 @@ class TestDeviceInfo extends JsonClass implements Comparable<TestDeviceInfo> {
     this.devicePixelRatio,
     this.dips,
     required this.id,
+    String? launchId,
     required this.manufacturer,
     required this.model,
     required this.os,
@@ -42,7 +45,7 @@ class TestDeviceInfo extends JsonClass implements Comparable<TestDeviceInfo> {
     this.physicalDevice = true,
     this.pixels,
     required this.systemVersion,
-  });
+  }) : launchId = launchId ?? _staticLaunchUniqueId;
 
   factory TestDeviceInfo.unknown() => TestDeviceInfo._(
         appIdentifier: 'unknown',
@@ -50,11 +53,14 @@ class TestDeviceInfo extends JsonClass implements Comparable<TestDeviceInfo> {
         buildNumber: 'unknown',
         device: 'unknown',
         id: 'unknown',
+        launchId: _staticLaunchUniqueId,
         manufacturer: 'unknown',
         model: 'unknown',
         os: 'unknown',
         systemVersion: 'unknown',
       );
+
+  static final _staticLaunchUniqueId = Uuid().v4();
 
   static TestDeviceInfo? instance;
 
@@ -66,6 +72,7 @@ class TestDeviceInfo extends JsonClass implements Comparable<TestDeviceInfo> {
   final double? devicePixelRatio;
   final BaseSize? dips;
   final String id;
+  final String launchId;
   final String manufacturer;
   final String model;
   final String? orientation;
@@ -91,6 +98,7 @@ class TestDeviceInfo extends JsonClass implements Comparable<TestDeviceInfo> {
         devicePixelRatio: JsonClass.parseDouble(screen['devicePixelRatio']),
         dips: BaseSize.fromDynamic(screen['dips']),
         id: map['id'],
+        launchId: map['launchId'] ?? _staticLaunchUniqueId,
         manufacturer: map['manufacturer'],
         model: map['model'],
         orientation: map['orientation'],
@@ -141,6 +149,7 @@ class TestDeviceInfo extends JsonClass implements Comparable<TestDeviceInfo> {
     double? devicePixelRatio,
     BaseSize? dips,
     String? id,
+    String? launchId,
     String? manufacturer,
     String? model,
     String? orientation,
@@ -158,6 +167,7 @@ class TestDeviceInfo extends JsonClass implements Comparable<TestDeviceInfo> {
         devicePixelRatio: devicePixelRatio ?? this.devicePixelRatio,
         dips: dips ?? this.dips,
         id: id ?? this.id,
+        launchId: launchId ?? this.launchId,
         manufacturer: manufacturer ?? this.manufacturer,
         model: model ?? this.model,
         orientation: orientation ?? this.orientation,
@@ -175,6 +185,7 @@ class TestDeviceInfo extends JsonClass implements Comparable<TestDeviceInfo> {
         'device': device,
         'deviceGroup': deviceGroup,
         'id': id,
+        'launchId': launchId,
         'manufacturer': manufacturer,
         'model': model,
         'orientation': orientation,
@@ -187,6 +198,7 @@ class TestDeviceInfo extends JsonClass implements Comparable<TestDeviceInfo> {
                 'dips': dips?.toJson(),
                 'pixels': pixels?.toJson(),
               },
+        'staticLaunchId': _staticLaunchUniqueId,
         'systemVersion': systemVersion,
       };
 }

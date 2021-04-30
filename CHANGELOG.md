@@ -1,3 +1,8 @@
+## [2.0.2] - April 13, 2021
+
+* Added static launch id to the `TestDeviceInfo` to create a unique and stable id for each app launch
+
+
 ## [2.0.1+1] - April 13, 2021
 
 * Added device info to `PingCommand`
