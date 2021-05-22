@@ -75,6 +75,24 @@ class TestStep extends JsonClass {
     return result;
   }
 
+  /// Attempts to parse a [TestStep] using the [fromDynamic] function, but if
+  /// for any reason that function throws an error, this will return [null]
+  /// rather that propagating the error.
+  static TestStep? fromDynamicNullable(
+    dynamic map, {
+    bool ignoreImages = false,
+  }) {
+    TestStep? result;
+
+    try {
+      result = fromDynamic(map, ignoreImages: ignoreImages);
+    } catch (e) {
+      // no-op; this is explicitly allowed
+    }
+
+    return result;
+  }
+
   /// Copies the current test step with the values provided.  The values from
   /// the original object will only be overwritten by any values from non-null
   /// passed in objects.
