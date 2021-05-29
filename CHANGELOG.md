@@ -1,3 +1,9 @@
+## [2.0.3+1] - May 29st, 2021
+
+* Updated with latest static code analysis rules
+* Dependency updates
+
+
 ## [2.0.3] - May 21st, 2021
 
 * Added `fromDynamicNullable` to `TestStep`.

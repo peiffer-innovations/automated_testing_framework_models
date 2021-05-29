@@ -28,7 +28,7 @@ class TestReportMetadata extends JsonClass {
   final DateTime? timestamp;
 
   static TestReportMetadata? fromDynamic(
-    dynamic? map, {
+    dynamic map, {
     String? id,
   }) {
     TestReportMetadata? result;

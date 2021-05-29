@@ -22,7 +22,7 @@ class CommandResponse extends JsonClass {
   };
 
   final String? message;
-  final dynamic? payload;
+  final dynamic payload;
   final bool? success;
   final String type;
 

@@ -13,7 +13,7 @@ class TestReport extends JsonClass {
     this.name,
     this.suiteName,
     required this.version,
-  })  : deviceInfo = deviceInfo ?? TestDeviceInfo.instance,
+  })   : deviceInfo = deviceInfo ?? TestDeviceInfo.instance,
         id = id ?? Uuid().v4(),
         _images = [],
         _logs = [],
@@ -31,7 +31,7 @@ class TestReport extends JsonClass {
     List<TestReportStep>? steps,
     this.suiteName,
     required this.version,
-  })  : _endTime = endTime,
+  })   : _endTime = endTime,
         _images = images,
         _logs = logs ?? <String>[],
         _runtimeException = runtimeException {
@@ -151,7 +151,7 @@ class TestReport extends JsonClass {
   }
 
   static TestReport fromDynamic(
-    dynamic? map, {
+    dynamic map, {
     String? id,
   }) {
     late TestReport result;
