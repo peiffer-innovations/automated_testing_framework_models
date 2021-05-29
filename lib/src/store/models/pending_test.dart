@@ -13,7 +13,7 @@ class PendingTest {
     required this.numSteps,
     required this.suiteName,
     required this.version,
-  })   : assert(numSteps >= 0),
+  })  : assert(numSteps >= 0),
         assert(version >= 0);
 
   /// Constructs the pending test from an already loaded in-memory test.  This

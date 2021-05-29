@@ -11,7 +11,7 @@ class DeviceCommand extends JsonClass {
     required this.payload,
     DateTime? timestamp,
     required this.type,
-  })   : id = id ?? Uuid().v4(),
+  })  : id = id ?? Uuid().v4(),
         timestamp = timestamp ?? DateTime.now();
 
   static final Map<String, DeviceCommand Function(dynamic, String, DateTime)>
