@@ -1,4 +1,4 @@
-## [2.0.3+1] - May 29st, 2021
+## [2.0.3+2] - May 29st, 2021
 
 * Updated with latest static code analysis rules
 * Dependency updates
