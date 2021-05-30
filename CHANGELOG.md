@@ -1,3 +1,8 @@
+## [2.0.4] - May 30th, 2021
+
+* Added streams to the `TestControllerState` so clients can listen to state updates.
+
+
 ## [2.0.3+2] - May 29st, 2021
 
 * Updated with latest static code analysis rules
