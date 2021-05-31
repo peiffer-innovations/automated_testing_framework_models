@@ -1,3 +1,9 @@
+## [2.0.5] - May 31th, 2021
+
+* Added documentation to `CommandResponse` and `DeviceCommand`.
+* Added `HeartbeatCommand`.
+
+
 ## [2.0.4] - May 30th, 2021
 
 * Added streams to the `TestControllerState` so clients can listen to state updates.

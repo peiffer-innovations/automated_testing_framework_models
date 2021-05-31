@@ -5,6 +5,12 @@ import 'package:json_class/json_class.dart';
 import 'package:logging/logging.dart';
 import 'package:uuid/uuid.dart';
 
+/// A command class intended to be extended to provide comamnds and controls
+/// events between the backend server, the device drivers, and the devices
+/// themselves.
+///
+/// Applications register their own commands through the
+/// [registerCustomCommands] function.
 class DeviceCommand extends JsonClass {
   DeviceCommand({
     String? id,
@@ -23,6 +29,7 @@ class DeviceCommand extends JsonClass {
     CommandAck.kCommandType: CommandAck.fromDynamic,
     GoodbyeCommand.kCommandType: GoodbyeCommand.fromDynamic,
     ListDevicesCommand.kCommandType: ListDevicesCommand.fromDynamic,
+    HeartbeatCommand.kCommandType: HeartbeatCommand.fromDynamic,
     ReleaseDeviceCommand.kCommandType: ReleaseDeviceCommand.fromDynamic,
     RequestScreenshotCommand.kCommandType: RequestScreenshotCommand.fromDynamic,
     ReserveDeviceCommand.kCommandType: ReserveDeviceCommand.fromDynamic,
@@ -35,11 +42,23 @@ class DeviceCommand extends JsonClass {
         StopScreenshotStreamCommand.fromDynamic,
   };
 
+  /// The unique id of the command.  Used to identify replies associated with
+  /// the command.
   final String id;
+
+  /// The payload of the command.  Each command must define the structure of
+  /// the payload.
   final dynamic payload;
+
+  /// The timestamp the command was created.
   final DateTime timestamp;
+
+  /// The type of the command.  This is used by the system to deserialize the
+  /// command from JSON into the proper model.
   final String type;
 
+  /// Deserializes the command from a [Map] or a map-like object into the the
+  /// proper data model.  This will throw an exception if [map] is null.
   static DeviceCommand fromDynamic(dynamic map) {
     late DeviceCommand result;
 
@@ -63,12 +82,15 @@ class DeviceCommand extends JsonClass {
     return result;
   }
 
-  /// Allows application to register it's own custom commands.
+  /// Allows an application to register it's own custom commands.  This is
+  /// additive so it may be called multiple times to add multiple sets of custom
+  /// commands.
   static void registerCustomCommands(
-          Map<String, DeviceCommand Function(dynamic, String, DateTime)>
-              builders) =>
+    Map<String, DeviceCommand Function(dynamic, String, DateTime)> builders,
+  ) =>
       _builders.addAll(builders);
 
+  /// Encodes this command into a JSON compatible map.
   @override
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -81,6 +103,7 @@ class DeviceCommand extends JsonClass {
   String toString() => json.encode(toJson());
 }
 
+/// Command to abort a currently running test.
 class AbortTestCommand extends DeviceCommand {
   AbortTestCommand({
     String? id,
@@ -113,6 +136,7 @@ class AbortTestCommand extends DeviceCommand {
   static Map<String, dynamic> _toPayload() => {};
 }
 
+/// Command to announce a device to a command and control server.
 class AnnounceDeviceCommand extends DeviceCommand {
   AnnounceDeviceCommand({
     String? id,
@@ -177,6 +201,7 @@ class AnnounceDeviceCommand extends DeviceCommand {
       };
 }
 
+/// Command to announce a test driver to a command and control server.
 class AnnounceDriverCommand extends DeviceCommand {
   AnnounceDriverCommand({
     required this.appIdentifier,
@@ -241,6 +266,8 @@ class AnnounceDriverCommand extends DeviceCommand {
       };
 }
 
+/// Command issued to solicit a challenge response for authentication /
+/// authorization purposes.
 class ChallengeCommand extends DeviceCommand {
   ChallengeCommand({
     String? id,
@@ -287,6 +314,8 @@ class ChallengeCommand extends DeviceCommand {
       };
 }
 
+/// Command to respond to a challenge with an authorization signature for
+/// authentication / authorization.
 class ChallengeResponseCommand extends DeviceCommand {
   ChallengeResponseCommand({
     required this.commandId,
@@ -339,6 +368,13 @@ class ChallengeResponseCommand extends DeviceCommand {
       };
 }
 
+/// Acknowlegement command sent in response to acknowledge a remote command.
+/// This will include the id of the command being ack'd in the [commandId].
+///
+/// The [success] parameter is used to toggle this between an "ack" and a
+/// "nack".  When it is null, that should be intrepretited as if the command was
+/// received, processing has started, but processing of it has not been
+/// completed.
 class CommandAck extends DeviceCommand {
   CommandAck({
     required this.commandId,
@@ -404,6 +440,10 @@ class CommandAck extends DeviceCommand {
       };
 }
 
+/// Command to tell the remote connection that the socket is about to be
+/// disconnected by the sender.  If the [complete] attribute is true then the
+/// session is also being terminated.  Otherwise, if the receiver initiates a
+/// reconnection then the session will be resumed.
 class GoodbyeCommand extends DeviceCommand {
   GoodbyeCommand({
     this.complete = false,
@@ -420,6 +460,7 @@ class GoodbyeCommand extends DeviceCommand {
 
   static const kCommandType = 'goodbye';
 
+  /// Set to true when the session is being terminated.  Set to false otherwise.
   final bool complete;
 
   static GoodbyeCommand fromDynamic(
@@ -449,6 +490,9 @@ class GoodbyeCommand extends DeviceCommand {
       };
 }
 
+/// Command to list the devices currently online for testing.  Use the
+/// [availableOnly] flag to filter between devices that are online, but actively
+/// in use, vs ones that are both online and available to run tests.
 class ListDevicesCommand extends DeviceCommand {
   ListDevicesCommand({
     this.availableOnly = false,
@@ -463,6 +507,7 @@ class ListDevicesCommand extends DeviceCommand {
 
   static const kCommandType = 'list_devices';
 
+  /// Set to true to filter out devices that are actively running tests.
   final bool availableOnly;
 
   static ListDevicesCommand fromDynamic(
@@ -493,6 +538,48 @@ class ListDevicesCommand extends DeviceCommand {
       };
 }
 
+/// Command that can be sent to the server simply to check if it is online and
+/// still properly responding to commands.  This is one of the only commands
+/// that can traditionally be sent without needing authentication.
+class HeartbeatCommand extends DeviceCommand {
+  HeartbeatCommand({
+    String? id,
+    DateTime? timestamp,
+  }) : super(
+          id: id,
+          payload: _toPayload(),
+          timestamp: timestamp,
+          type: kCommandType,
+        );
+
+  static const kCommandType = 'heartbeat';
+
+  static HeartbeatCommand fromDynamic(
+    dynamic map,
+    String id,
+    DateTime timestamp,
+  ) {
+    late HeartbeatCommand result;
+
+    if (map == null) {
+      throw Exception('[HeartbeatCommand.fromDynamic]: map is null');
+    } else {
+      result = HeartbeatCommand(
+        id: id,
+        timestamp: timestamp,
+      );
+    }
+
+    return result;
+  }
+
+  static Map<String, dynamic> _toPayload() => {};
+}
+
+/// Command sent to let the other side know the connection is still ongoing and
+/// that the sender is still actively processing commands.  Devices may
+/// optionally provide information about the device and the device's test state
+/// as part of these periodic check ins.
 class PingCommand extends DeviceCommand {
   PingCommand({
     String? id,
@@ -549,6 +636,8 @@ class PingCommand extends DeviceCommand {
       };
 }
 
+/// Command sent by a test driver to release a device from the driver to put it
+/// back into the available device pool.
 class ReleaseDeviceCommand extends DeviceCommand {
   ReleaseDeviceCommand({
     required this.deviceId,
@@ -595,6 +684,7 @@ class ReleaseDeviceCommand extends DeviceCommand {
       };
 }
 
+/// Command sent by a test driver to request a single screenshot from a device.
 class RequestScreenshotCommand extends DeviceCommand {
   RequestScreenshotCommand({
     required this.deviceId,
@@ -641,6 +731,9 @@ class RequestScreenshotCommand extends DeviceCommand {
       };
 }
 
+/// Command sent by a test driver to reserve a test device.  If this is ack'd
+/// with a successful response, the device will now accept commands from the
+/// test driver.
 class ReserveDeviceCommand extends DeviceCommand {
   ReserveDeviceCommand({
     required this.deviceId,
@@ -659,7 +752,12 @@ class ReserveDeviceCommand extends DeviceCommand {
 
   static const kCommandType = 'reserve_device';
 
+  /// The unique id of the device as reported by the server.
   final String deviceId;
+
+  /// The name of the driver.  This is meant to be human readable and should
+  /// have meaning within the team doing the testing to provide team members
+  /// with the knowledge of who is using what devices.
   final String driverName;
 
   static ReserveDeviceCommand fromDynamic(
@@ -693,6 +791,8 @@ class ReserveDeviceCommand extends DeviceCommand {
       };
 }
 
+/// Command to initiate a test run on a device.  The device will send progress
+/// via the [CommandAck] command using this command's id.
 class RunTestCommand extends DeviceCommand {
   RunTestCommand({
     String? id,
@@ -711,7 +811,11 @@ class RunTestCommand extends DeviceCommand {
 
   static const kCommandType = 'run_test';
 
+  /// Set to true to have the device respond with screenshots taken via the
+  /// "screenshot" test step.
   final bool sendScreenshots;
+
+  /// The test to execute on the device.
   final Test test;
 
   static RunTestCommand fromDynamic(
@@ -745,6 +849,9 @@ class RunTestCommand extends DeviceCommand {
       };
 }
 
+/// Command to start a log stream from the device to the test driver.  When
+/// accepted the device will send a [CommandAck] with this command's id and the
+/// log information in the response.
 class StartLogStreamCommand extends DeviceCommand {
   StartLogStreamCommand({
     String? id,
@@ -761,6 +868,7 @@ class StartLogStreamCommand extends DeviceCommand {
 
   static const kCommandType = 'start_log_stream';
 
+  /// Log level threshold for the device to send log information.
   final Level level;
 
   static StartLogStreamCommand fromDynamic(
@@ -791,6 +899,10 @@ class StartLogStreamCommand extends DeviceCommand {
       };
 }
 
+/// Command instructing the device to send a screenshot periodically to the
+/// driver.  The default implementation will only send screenshots that have
+/// changed since the previous one rather than constantly sending the same
+/// screenshot over and over.
 class StartScreenshotStreamCommand extends DeviceCommand {
   StartScreenshotStreamCommand({
     String? id,
@@ -808,6 +920,7 @@ class StartScreenshotStreamCommand extends DeviceCommand {
 
   static const kCommandType = 'start_screenshot_stream';
 
+  /// The amount of time to wait between screenshots.
   final Duration interval;
 
   static StartScreenshotStreamCommand fromDynamic(
@@ -840,6 +953,7 @@ class StartScreenshotStreamCommand extends DeviceCommand {
       };
 }
 
+/// Command to instruct a device to stop streaming logs to the test driver.
 class StopLogStreamCommand extends DeviceCommand {
   StopLogStreamCommand({
     String? id,
@@ -875,6 +989,7 @@ class StopLogStreamCommand extends DeviceCommand {
   static Map<String, dynamic> _toPayload() => {};
 }
 
+/// Command to stop the stream of screenshots from a device to a test driver.
 class StopScreenshotStreamCommand extends DeviceCommand {
   StopScreenshotStreamCommand({
     String? id,

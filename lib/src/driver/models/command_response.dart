@@ -5,6 +5,7 @@ import 'package:automated_testing_framework_models/automated_testing_framework_m
 import 'package:json_class/json_class.dart';
 import 'package:logging/logging.dart';
 
+/// Base class for the command responses associated to the [CommandAck].
 class CommandResponse extends JsonClass {
   CommandResponse({
     this.message,
@@ -21,11 +22,22 @@ class CommandResponse extends JsonClass {
     TestStatusResponse.kResponseType: TestStatusResponse.fromDynamic,
   };
 
+  /// The optional message associated with the response.
   final String? message;
+
+  /// The type-specific payload.  The value of which is defined by each
+  /// sub-class.
   final dynamic payload;
+
+  /// Optional success flag.  If set the process is complete.  If null, the
+  /// process associated with the command is still running.
   final bool? success;
+
+  /// The type.  Used to define the payload and response class.
   final String type;
 
+  /// Processes a Map or Map-like object into a response.  If the map is null
+  /// then this will return null.
   static CommandResponse? fromDynamic(dynamic map) {
     CommandResponse? result;
 
@@ -66,6 +78,8 @@ class CommandResponse extends JsonClass {
   String toString() => json.encode(toJson());
 }
 
+/// Response associated with a [ListDevicesCommand] that provides the list of
+/// connected devices.
 class ListDevicesResponse extends CommandResponse {
   ListDevicesResponse({
     required this.devices,
@@ -116,6 +130,8 @@ class ListDevicesResponse extends CommandResponse {
       };
 }
 
+/// Response associated with a [StartLogStreamCommand] that provides the log
+/// entry information.
 class LogResponse extends CommandResponse {
   LogResponse({
     String? message,
@@ -163,6 +179,9 @@ class LogResponse extends CommandResponse {
       };
 }
 
+/// Response containing a screenshot image.  This may come from a
+/// [RunTestCommand]'s [ScreenshotStep] or from a
+/// [StartScreenshotStreamCommand].
 class ScreenshotResponse extends CommandResponse {
   ScreenshotResponse({
     required this.image,
@@ -207,6 +226,7 @@ class ScreenshotResponse extends CommandResponse {
       };
 }
 
+/// Response that gets sent periodically from a [RunTestCommand].
 class TestStatusResponse extends CommandResponse {
   TestStatusResponse({
     this.complete = false,
@@ -229,9 +249,17 @@ class TestStatusResponse extends CommandResponse {
 
   static const kResponseType = 'test_status';
 
+  /// Will be true if and only if the test has been completed.
   final bool complete;
+
+  /// The 0-1 based progress of the test run.
   final double progress;
+
+  /// The associated test report.  It will be a partial report on each status
+  /// response until [complete] is true.
   final TestReport report;
+
+  /// A displayable status for the current status event.
   final String status;
 
   static TestStatusResponse fromDynamic(
