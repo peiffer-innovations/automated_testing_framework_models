@@ -35,7 +35,7 @@ class TestStep extends JsonClass {
   /// Converts a JSON-like object to a [TestStep].  Whie this accepts a
   /// [dynamic], that is because different frameworks provide different types of
   /// JSON-like objects.  So long as the given [map] implements the `[]`
-  /// operator, this will work.  A value of [null] will result in [null] being
+  /// operator, this will work.  A value of `null` will result in `null` being
   /// returned and an object that does not suppor the `[]` operator will result
   /// in an exception being thrown.
   ///
@@ -76,7 +76,7 @@ class TestStep extends JsonClass {
   }
 
   /// Attempts to parse a [TestStep] using the [fromDynamic] function, but if
-  /// for any reason that function throws an error, this will return [null]
+  /// for any reason that function throws an error, this will return `null`
   /// rather that propagating the error.
   static TestStep? fromDynamicNullable(
     dynamic map, {

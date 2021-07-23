@@ -11,7 +11,7 @@ import 'package:meta/meta.dart';
 /// your specific application.
 ///
 /// Given that the default set goes wide, it is recommended that applications
-/// explicitly set values to [null] for any gestures that should not be used.
+/// explicitly set values to `null` for any gestures that should not be used.
 @immutable
 class TestableGestures {
   TestableGestures({

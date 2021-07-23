@@ -95,12 +95,12 @@ class TestReport extends JsonClass {
   int get errorSteps =>
       _steps.values.where((step) => step.error != null).length;
 
-  /// Returns the exception stream for the report.  This will return [null] if
+  /// Returns the exception stream for the report.  This will return `null` if
   /// the report has already been completed.  Listeners will be notified
   /// whenever an exception happens within the testing framework itself.
   Stream<String>? get exceptionStream => _exceptionStreamController?.stream;
 
-  /// Returns the image stream for the report.  This will return [null] if the
+  /// Returns the image stream for the report.  This will return `null` if the
   /// report has already been completed.  Listeners will be notified whenever an
   /// image is added to the report.
   Stream<TestImage>? get imageStream => _imageStreamController?.stream;
@@ -108,7 +108,7 @@ class TestReport extends JsonClass {
   /// Returns the list of images that were screen captured via the test.
   List<TestImage> get images => List.unmodifiable(_images ?? <TestImage>[]);
 
-  /// Returns the logging stream for the report.  This will return [null] if the
+  /// Returns the logging stream for the report.  This will return `null` if the
   /// report has already been completed.  Listeners will be notified whenever a
   /// log entry is added to the report.
   Stream<String>? get logStream => _logStreamController?.stream;
@@ -130,7 +130,7 @@ class TestReport extends JsonClass {
   /// expected due to failed test runs.
   String? get runtimeException => _runtimeException;
 
-  /// Returns the test step stream for the report.  This will return [null] if
+  /// Returns the test step stream for the report.  This will return `null` if
   /// the report has already been completed.  Listeners will be notified with
   /// every completed test step.
   Stream<TestReportStep>? get stepStream => _stepStreamController?.stream;
@@ -226,7 +226,7 @@ class TestReport extends JsonClass {
     }
   }
 
-  /// Ends the given [step] with the optional [error].  If the [error] is [null]
+  /// Ends the given [step] with the optional [error].  If the [error] is `null`
   /// then the step is considered successful.  If there is an [error] value then
   /// the step is considered a failure.
   void endStep(

@@ -1,12 +1,11 @@
-## [2.0.7] - July 23rd, 2021
+## [2.0.7+1] - July 23rd, 2021
 
 * Dependency updates
 
 
-## [2.0.6] - May 31th, 2021
+## [2.0.6] - June 21st, 2021
 
-* Added documentation to `CommandResponse` and `DeviceCommand`.
-* Added `HeartbeatCommand`.
+* Added `pinnedStepIndex` to `Test` to allow for easily adding steps to places other than the end of the test.
 
 
 ## [2.0.5] - May 31th, 2021

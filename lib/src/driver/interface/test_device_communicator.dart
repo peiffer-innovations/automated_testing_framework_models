@@ -7,7 +7,7 @@ abstract class TestDeviceCommunicator {
   bool get active;
 
   /// Returns the stream that will fire whenever the communicator receives a
-  /// command from the external driver.  This may return [null] if the
+  /// command from the external driver.  This may return `null` if the
   /// communicator is not currently active.
   Stream<DeviceCommand> get commandStream;
 

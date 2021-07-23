@@ -21,7 +21,7 @@ class TestReportStep extends JsonClass {
   /// The date time that the step completed.
   final DateTime? endTime;
 
-  /// Any error description if an error happened.  Will be [null] if, and only
+  /// Any error description if an error happened.  Will be `null` if, and only
   /// if, the step passed.
   final String? error;
 
