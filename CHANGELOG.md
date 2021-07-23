@@ -1,3 +1,14 @@
+## [2.0.7] - July 23rd, 2021
+
+* Dependency updates
+
+
+## [2.0.6] - May 31th, 2021
+
+* Added documentation to `CommandResponse` and `DeviceCommand`.
+* Added `HeartbeatCommand`.
+
+
 ## [2.0.5] - May 31th, 2021
 
 * Added documentation to `CommandResponse` and `DeviceCommand`.
