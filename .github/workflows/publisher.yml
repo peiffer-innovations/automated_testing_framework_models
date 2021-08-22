@@ -27,3 +27,7 @@ jobs:
           credential: ${{ secrets.CREDENTIAL_JSON }}
           flutter_package: false
           skip_test: true
+
+      - uses: CDDelta/dart-version-auto-tag@v1.0.1
+        with:
+          token: ${{ secrets.REPO_TOKEN }}
