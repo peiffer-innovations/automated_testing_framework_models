@@ -3,6 +3,9 @@ name: Dart Publisher
 on:
   push:
     branches: [main]
+    paths:
+      - lib/**
+      - pubspec.yaml
 
 jobs:
   build:
