@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
-import 'package:pointycastle/digests/sha256.dart';
 import 'package:json_class/json_class.dart';
 import 'package:meta/meta.dart';
+import 'package:pointycastle/digests/sha256.dart';
 
 /// Represents an image from a test.
 @immutable

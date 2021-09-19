@@ -1,6 +1,6 @@
 import 'package:automated_testing_framework_models/automated_testing_framework_models.dart';
-import 'package:meta/meta.dart';
 import 'package:json_class/json_class.dart';
+import 'package:meta/meta.dart';
 import 'package:uuid/uuid.dart';
 
 /// Container class for the device information for the device the test is being
