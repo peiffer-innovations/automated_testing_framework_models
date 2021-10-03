@@ -29,7 +29,6 @@ class DeviceCommand extends JsonClass {
     CommandAck.kCommandType: CommandAck.fromDynamic,
     GoodbyeCommand.kCommandType: GoodbyeCommand.fromDynamic,
     ListDevicesCommand.kCommandType: ListDevicesCommand.fromDynamic,
-    HeartbeatCommand.kCommandType: HeartbeatCommand.fromDynamic,
     ReleaseDeviceCommand.kCommandType: ReleaseDeviceCommand.fromDynamic,
     RequestScreenshotCommand.kCommandType: RequestScreenshotCommand.fromDynamic,
     ReserveDeviceCommand.kCommandType: ReserveDeviceCommand.fromDynamic,
@@ -536,44 +535,6 @@ class ListDevicesCommand extends DeviceCommand {
       {
         'availableOnly': availableOnly,
       };
-}
-
-/// Command that can be sent to the server simply to check if it is online and
-/// still properly responding to commands.  This is one of the only commands
-/// that can traditionally be sent without needing authentication.
-class HeartbeatCommand extends DeviceCommand {
-  HeartbeatCommand({
-    String? id,
-    DateTime? timestamp,
-  }) : super(
-          id: id,
-          payload: _toPayload(),
-          timestamp: timestamp,
-          type: kCommandType,
-        );
-
-  static const kCommandType = 'heartbeat';
-
-  static HeartbeatCommand fromDynamic(
-    dynamic map,
-    String id,
-    DateTime timestamp,
-  ) {
-    late HeartbeatCommand result;
-
-    if (map == null) {
-      throw Exception('[HeartbeatCommand.fromDynamic]: map is null');
-    } else {
-      result = HeartbeatCommand(
-        id: id,
-        timestamp: timestamp,
-      );
-    }
-
-    return result;
-  }
-
-  static Map<String, dynamic> _toPayload() => {};
 }
 
 /// Command sent to let the other side know the connection is still ongoing and

@@ -1,3 +1,8 @@
+## [2.0.8] - October 3rd, 2021
+
+* Removed unused `HeartbeatCommand`
+
+
 ## [2.0.7+4] - September 19th, 2021
 
 * Dependency updates
