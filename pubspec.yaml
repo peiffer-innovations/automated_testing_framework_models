@@ -4,7 +4,7 @@ version: 2.0.8+3
 homepage: https://github.com/peiffer-innovations/automated_testing_framework_models
 
 environment:
-  sdk: ">=2.15.0 <3.0.0"
+  sdk: ">=2.16.0 <3.0.0"
 
 dependencies:
   convert: ^3.0.1
@@ -12,7 +12,7 @@ dependencies:
   logging: ^1.0.2
   meta: ^1.7.0
   pointycastle: ^3.5.0
-  uuid: ^3.0.5
+  uuid: ^3.0.6
 
 dev_dependencies:
   test: ^1.20.1
