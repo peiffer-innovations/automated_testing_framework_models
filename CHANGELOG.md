@@ -1,3 +1,8 @@
+## [2.0.9+1] - May, 30, 2022
+
+* Automated dependency updates
+
+
 ## [2.0.9] - May 14th, 2022
 
 * Flutter 3.0
@@ -171,3 +176,4 @@
 ## [1.0.0] - October 31st, 2020
 
 * Splitted several core models out to be pure dart compatible.
+
