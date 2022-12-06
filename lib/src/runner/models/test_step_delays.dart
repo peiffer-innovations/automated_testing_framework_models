@@ -89,9 +89,9 @@ class TestStepDelays implements JsonClass {
       result = TestStepDelays(
         defaultTimeout: JsonClass.parseDurationFromMillis(
               map['defaultTimeout'],
-              Duration(seconds: 10),
+              const Duration(seconds: 10),
             ) ??
-            Duration(seconds: 10),
+            const Duration(seconds: 10),
         postFoundWidget: JsonClass.parseDurationFromMillis(
               map['postFoundWidget'],
               Duration.zero,
@@ -99,39 +99,39 @@ class TestStepDelays implements JsonClass {
             Duration.zero,
         postStep: JsonClass.parseDurationFromMillis(
               map['postStep'],
-              Duration(seconds: 1),
+              const Duration(seconds: 1),
             ) ??
-            Duration(seconds: 1),
+            const Duration(seconds: 1),
         postSubmitReport: JsonClass.parseDurationFromMillis(
               map['postSubmitReport'],
-              Duration(seconds: 5),
+              const Duration(seconds: 5),
             ) ??
-            Duration(seconds: 5),
+            const Duration(seconds: 5),
         preStep: JsonClass.parseDurationFromMillis(
               map['preStep'],
-              Duration(seconds: 1),
+              const Duration(seconds: 1),
             ) ??
-            Duration(seconds: 1),
+            const Duration(seconds: 1),
         screenshot: JsonClass.parseDurationFromMillis(
               map['screenshot'],
-              Duration(seconds: 5),
+              const Duration(seconds: 5),
             ) ??
-            Duration(seconds: 5),
+            const Duration(seconds: 5),
         scrollIncrement: JsonClass.parseDurationFromMillis(
               map['scrollIncrement'],
-              Duration(milliseconds: 100),
+              const Duration(milliseconds: 100),
             ) ??
-            Duration(milliseconds: 100),
+            const Duration(milliseconds: 100),
         testSetUp: JsonClass.parseDurationFromMillis(
               map['testSetUp'],
-              Duration(milliseconds: 500),
+              const Duration(milliseconds: 500),
             ) ??
-            Duration(milliseconds: 500),
+            const Duration(milliseconds: 500),
         testTearDown: JsonClass.parseDurationFromMillis(
               map['testTearDown'],
-              Duration(milliseconds: 500),
+              const Duration(milliseconds: 500),
             ) ??
-            Duration(milliseconds: 500),
+            const Duration(milliseconds: 500),
       );
     }
 

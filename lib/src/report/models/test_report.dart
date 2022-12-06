@@ -14,7 +14,7 @@ class TestReport extends JsonClass {
     this.suiteName,
     required this.version,
   })  : deviceInfo = deviceInfo ?? TestDeviceInfo.instance,
-        id = id ?? Uuid().v4(),
+        id = id ?? const Uuid().v4(),
         _images = [],
         _logs = [],
         startTime = DateTime.now();
@@ -196,7 +196,7 @@ class TestReport extends JsonClass {
     required bool goldenCompatible,
     required String id,
   }) {
-    var image = TestImage(
+    final image = TestImage(
       goldenCompatible: goldenCompatible,
       id: id,
       image: screenshot,
@@ -254,7 +254,7 @@ class TestReport extends JsonClass {
   /// This will also end all pending steps and mark them as failed using the
   /// given [message] as the error.
   void exception(String message, dynamic e, StackTrace stack) {
-    var re = '$message: $e\n$stack';
+    final re = '$message: $e\n$stack';
     _runtimeException = re;
 
     _pendingSteps.forEach((step) => endStep(step));

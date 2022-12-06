@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
+
 import 'package:json_class/json_class.dart';
 import 'package:meta/meta.dart';
 import 'package:uuid/uuid.dart';
@@ -26,7 +27,7 @@ class TestStep extends JsonClass {
   /// ensure widgets that represent the widget can be correctly, and uniquely,
   /// identified by Flutter's widget builder.  This is not meant for external
   /// consumption as it is guaranteed to be unique with every object instance.
-  final String key = Uuid().v4();
+  final String key = const Uuid().v4();
 
   /// The map of key / value pairs that are utilized by the step.  This map will
   /// be different based on the step's [id].
@@ -62,7 +63,7 @@ class TestStep extends JsonClass {
       throw Exception('[TestStep.fromDynamic]: map is null');
     } else {
       result = TestStep(
-        id: map['id'] ?? Uuid().v4(),
+        id: map['id'] ?? const Uuid().v4(),
         image: map['image'] == null || ignoreImages == true
             ? null
             : base64Decode(map['image']),

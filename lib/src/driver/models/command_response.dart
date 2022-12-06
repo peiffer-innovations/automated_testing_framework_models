@@ -42,9 +42,9 @@ class CommandResponse extends JsonClass {
     CommandResponse? result;
 
     if (map != null) {
-      String type = map['type'];
+      final type = map['type'];
 
-      var builder = _builders[type];
+      final builder = _builders[type];
       result = CommandResponse(
         message: map['message'],
         payload: map['payload'],

@@ -23,8 +23,8 @@ class TestSuiteReport {
   /// device hasn't changed during the entire run so it will return the first
   /// non-null instance from any of the results.
   TestDeviceInfo? get deviceInfo {
-    var infos = _results.where((result) => result?.deviceInfo != null);
-    var info = infos.isNotEmpty == true ? infos.first?.deviceInfo : null;
+    final infos = _results.where((result) => result?.deviceInfo != null);
+    final info = infos.isNotEmpty == true ? infos.first?.deviceInfo : null;
 
     return info;
   }

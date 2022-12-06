@@ -17,7 +17,7 @@ class DeviceCommand extends JsonClass {
     required this.payload,
     DateTime? timestamp,
     required this.type,
-  })  : id = id ?? Uuid().v4(),
+  })  : id = id ?? const Uuid().v4(),
         timestamp = timestamp ?? DateTime.now();
 
   static final Map<String, DeviceCommand Function(dynamic, String, DateTime)>
@@ -64,7 +64,7 @@ class DeviceCommand extends JsonClass {
     if (map == null) {
       throw Exception('[DeviceCommand.fromDynamic]: map is null');
     } else {
-      var cmd = DeviceCommand(
+      final cmd = DeviceCommand(
         id: map['id'],
         type: map['type'],
         payload: map['payload'],
@@ -72,7 +72,7 @@ class DeviceCommand extends JsonClass {
       );
       result = cmd;
 
-      var builder = _builders[cmd.type];
+      final builder = _builders[cmd.type];
       if (builder != null) {
         result = builder(cmd.payload, cmd.id, cmd.timestamp);
       }

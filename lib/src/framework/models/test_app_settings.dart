@@ -12,7 +12,7 @@ class TestAppSettings {
     this.testTimeout,
   });
 
-  static TestAppSettings _settings = TestAppSettings._();
+  static TestAppSettings _settings = const TestAppSettings._();
 
   /// The unique identifier for the application.  This can be anything
   /// meaningful for the application.  It can be the application's name, the

@@ -66,7 +66,7 @@ class TestDeviceInfo extends JsonClass implements Comparable<TestDeviceInfo> {
         systemVersion: 'unknown',
       );
 
-  static final _staticLaunchUniqueId = Uuid().v4();
+  static final _staticLaunchUniqueId = const Uuid().v4();
 
   static TestDeviceInfo? instance;
 
@@ -93,7 +93,7 @@ class TestDeviceInfo extends JsonClass implements Comparable<TestDeviceInfo> {
     if (map == null) {
       throw Exception('[TestDeviceInfo.fromDynamic]: map is null');
     } else {
-      var screen = map['screen'] ?? {};
+      final screen = map['screen'] ?? {};
 
       result = TestDeviceInfo.custom(
         appIdentifier: map['appIdentifier'],
@@ -134,9 +134,9 @@ class TestDeviceInfo extends JsonClass implements Comparable<TestDeviceInfo> {
 
     result = os.compareTo(other.os);
     if (result == 0) {
-      var thisModel = os == 'ios' ? device : model;
+      final thisModel = os == 'ios' ? device : model;
 
-      var otherModel = other.os == 'ios' ? other.device : other.model;
+      final otherModel = other.os == 'ios' ? other.device : other.model;
       result = thisModel.toLowerCase().compareTo(otherModel.toLowerCase());
     }
     if (result == 0) {

@@ -33,14 +33,14 @@ class GoldenTestImages extends JsonClass {
     String? suiteName,
     required String testName,
   }) {
-    var suitePrefix = suiteName?.isNotEmpty == true ? '${suiteName}_' : '';
+    final suitePrefix = suiteName?.isNotEmpty == true ? '${suiteName}_' : '';
     return '${suitePrefix}${testName}_${deviceInfo.appIdentifier}_${deviceInfo.os}_${deviceInfo.systemVersion}_${deviceInfo.model}_${deviceInfo.device}_${deviceInfo.orientation}_${deviceInfo.pixels?.height}_${deviceInfo.pixels?.width}';
   }
 
   static String createIdFromReport(TestReport report) {
-    var suiteName = report.suiteName;
-    var testName = report.name;
-    var deviceInfo = report.deviceInfo;
+    final suiteName = report.suiteName;
+    final testName = report.name;
+    final deviceInfo = report.deviceInfo;
 
     return createId(
       deviceInfo: deviceInfo ?? TestDeviceInfo.unknown(),
@@ -70,7 +70,7 @@ class GoldenTestImages extends JsonClass {
   }
 
   static GoldenTestImages fromTestReport(TestReport report) {
-    var goldenHashes = <String, String>{};
+    final goldenHashes = <String, String>{};
 
     for (var image in report.images) {
       if (image.goldenCompatible == true) {

@@ -23,7 +23,7 @@ class DriverSignatureHelper {
     final hmac = HMac(SHA256Digest(), 64)
       ..init(KeyParameter(Uint8List.fromList(utf8.encode(secret))));
 
-    var data = utf8.encode(args.join('|'));
+    final data = utf8.encode(args.join('|'));
 
     return hex.encode(hmac.process(Uint8List.fromList(data)));
   }
@@ -32,11 +32,11 @@ class DriverSignatureHelper {
   /// bytes seeding the string.
   String createSalt([int size = 2048]) {
     assert(size > 0);
-    var bits = <int>[];
+    final bits = <int>[];
     for (var i = 0; i < size; i++) {
       bits.add(random.nextInt(256));
     }
-    var salt = hex.encode(bits);
+    final salt = hex.encode(bits);
 
     return salt;
   }
