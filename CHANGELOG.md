@@ -1,3 +1,8 @@
+## [2.0.10] - January 24th, 2023
+
+* Flutter 3.7
+
+
 ## [2.0.9+16] - January 17, 2023
 
 * Automated dependency updates
