@@ -1,3 +1,8 @@
+## [2.0.10+3] - March 7, 2023
+
+* Automated dependency updates
+
+
 ## [2.0.10+2] - February 14, 2023
 
 * Automated dependency updates
@@ -266,6 +271,7 @@
 ## [1.0.0] - October 31st, 2020
 
 * Splitted several core models out to be pure dart compatible.
+
 
 
 
